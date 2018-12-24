@@ -4,7 +4,7 @@ import 'rxjs/add/observable/interval';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/takeWhile';
 import 'rxjs/add/operator/do';
-import { calc } from 'ephemeris_npm';
+import { getAllPlanets } from 'ephemeris_npm';
 
 @Component({
   selector: 'app-root',
@@ -15,9 +15,15 @@ export class AppComponent {
   max = 1;
   current = 0;
   title = 'ThemeAstral';
-  test = calc(3, 4, 1986, 4, 54);
+  // test = calc(3, 4, 1986, 4, 54);
   // result = getAllPlanets('03.04.1986 04:54:00', -71.13, 42.27, 0);
-// 46.202222 lon 6.14569
+  // 46.202222 lon 6.14569
+  // test = getAllPlanets(3, 4, 1986, 4, 54, -71.13, 42.27, 0);
+  test: any = getAllPlanets('03.04.1986 04:54:00', -71.13, 42.27, 0);
+
+  constructor() {
+    console.log(this.test);
+  }
 
   /// Start the timer
   start() {
