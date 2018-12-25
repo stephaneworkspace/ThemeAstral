@@ -7,6 +7,8 @@ import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms'; // <-- here
 import { RoundProgressModule } from 'angular-svg-round-progressbar'; //
 
+
+
 @NgModule({
   declarations: [
     AppComponent
