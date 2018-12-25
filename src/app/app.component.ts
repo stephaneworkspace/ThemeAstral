@@ -24,6 +24,13 @@ export class AppComponent implements AfterViewInit {
   test: any = getAllPlanets('03.04.1986 04:54:00', -71.13, 42.27, 0);
 
   private _size = 450;
+  private _zodiac = {
+    ascendant: {
+      sign: 1,
+      degree: 1.15
+    }
+  };
+
   @ViewChild('myCanvas') myCanvas: ElementRef;
 
   ngAfterViewInit() {
@@ -32,10 +39,21 @@ export class AppComponent implements AfterViewInit {
     // happy drawing from here on
     context.fillStyle = 'white';
     context.fillRect(0, 0, 450, 450);
+
+    // Cercle qui touche presque la bordure * 0.48
     context.beginPath();
-    context.arc(this._size * 0.5, this._size * 0.5, this._size * 0.4, 0, Math.PI * 2, true); // Outer circle
-    context.strokeStyle = 'blue';
+    context.arc(this._size * 0.5, this._size * 0.5, this._size * 0.48, 0, Math.PI * 2, false); // Outer circle
+    context.strokeStyle = 'black';
     context.stroke();
+    context.closePath();
+
+    // Cercle à 0.4
+    context.beginPath();
+    context.arc(this._size * 0.5, this._size * 0.5, this._size * 0.4, 0, Math.PI * 2, false); // Outer circle
+    context.strokeStyle = 'black';
+    context.stroke();
+    context.closePath();
+
   }
 
   get size() {
