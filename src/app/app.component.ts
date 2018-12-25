@@ -54,31 +54,58 @@ export class AppComponent implements AfterViewInit {
     context.stroke();
     context.closePath();
 
-    // Trait à 90°
+    // 12 signes astrologique décalage par rapport au zodiaque
     context.beginPath();
-    context.moveTo(this._size * 0.5, this._size * 0.5);
-    // context.lineTo(10, 10);
-
     // trait par degré
-    let step = 2 * Math.PI / 360;
+    let step = 2 * Math.PI / 12;
     let h = this._size * 0.5;
     let k = this._size * 0.5;
-    let r = 180; // taille du trait
+    let r = 216; // taille du trait
     let x = 0;
     let y = 0;
 
-    for (let theta = 0;  theta < 2 * Math.PI;  theta += step) {
+    for (let theta = 0 - this._zodiac.ascendant.degree;  theta < (2 * Math.PI) - this._zodiac.ascendant.degree;  theta += step) {
       x = h + r * Math.cos(theta);
       y = k - r * Math.sin(theta);
       context.moveTo(this._size * 0.5, this._size * 0.5);
       context.lineTo(x, y);
     }
-
     context.strokeStyle = 'black';
     context.stroke();
     context.closePath();
 
-    /* 12 trait à 0° au milieu
+    // 360 Traits jusqu'au centre
+    context.beginPath();
+    // trait par degré
+    step = 2 * Math.PI / 360;
+    h = this._size * 0.5;
+    k = this._size * 0.5;
+    r = 180; // taille du trait
+    x = 0;
+    y = 0;
+    for (let theta = 0;  theta < 2 * Math.PI;  theta += step) {
+      if (theta === 0) {
+        // eviter de reécrire dessus
+      } else {
+        x = h + r * Math.cos(theta);
+        y = k - r * Math.sin(theta);
+        context.moveTo(this._size * 0.5, this._size * 0.5);
+        context.lineTo(x, y);
+      }
+    }
+    context.strokeStyle = 'black';
+    context.stroke();
+    context.closePath();
+
+    // Cercle à 0.4 pour effacer les fracal 360°
+    context.beginPath();
+    context.arc(this._size * 0.5, this._size * 0.5, this._size * 0.38, 0, Math.PI * 2, false); // Outer circle
+    context.strokeStyle = 'white';
+    context.stroke();
+    context.fill();
+    context.closePath();
+
+    /* bidouille
     const step = 2 * Math.PI / 12;
     const h = this._size * 0.5;
     const k = this._size * 0.5;
