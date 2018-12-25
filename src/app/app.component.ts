@@ -7,14 +7,19 @@ import 'rxjs/add/operator/do';
 import { fromEvent, Subscription, from } from 'rxjs';
 import { pairwise, switchMap, takeUntil } from 'rxjs/operators';
 import { getAllPlanets } from 'ephemeris_npm';
-import { AbstractFormGroupDirective } from '@angular/forms';
-import { createText } from '@angular/core/src/view/text';
+
+export interface XY {
+  x: number;
+  y: number;
+  itemNumber: number;
+}
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
+
 export class AppComponent implements AfterViewInit {
   title = 'ThemeAstral';
   // test = calc(3, 4, 1986, 4, 54);
@@ -30,11 +35,14 @@ export class AppComponent implements AfterViewInit {
       degree: 1.15
     }
   };
+  private _arrayZodiac12: Array<XY>;
 
   @ViewChild('myCanvas') myCanvas: ElementRef;
   // @ViewChild('zodiacAries') zodiacAries: ElementRef;
 
   ngAfterViewInit() {
+    let self = this;
+    this._arrayZodiac12 = [];
     // wait for the view to init before using the element
     const context: CanvasRenderingContext2D = this.myCanvas.nativeElement.getContext('2d');
     // happy drawing from here on
@@ -64,12 +72,21 @@ export class AppComponent implements AfterViewInit {
     let r = 216; // taille du trait
     let x = 0;
     let y = 0;
+    let itemNumber = 0;
 
     for (let theta = 0 - this._zodiac.ascendant.degree;  theta < (2 * Math.PI) - this._zodiac.ascendant.degree;  theta += step) {
+      itemNumber++;
       x = h + r * Math.cos(theta);
       y = k - r * Math.sin(theta);
       context.moveTo(this._size * 0.5, this._size * 0.5);
       context.lineTo(x, y);
+
+      this._arrayZodiac12.push({
+        x: x,
+        y: y,
+        itemNumber: itemNumber
+      });
+
       // context.drawImage(this.signeBelier, this._size * 0.5, this._size * 0.5);
     }
     context.strokeStyle = 'black';
@@ -116,8 +133,14 @@ export class AppComponent implements AfterViewInit {
           switch (this._zodiac.ascendant.sign) {
             case 1:
               // Début par bélier
-              imageSignAries.onload = function () {
-                context.drawImage(imageSignAries, 0, 0);
+              self = this;
+              imageSignAries.onload = function (e: any)  {
+                self._arrayZodiac12.forEach(element => {
+                  if (element.itemNumber === 1) {
+                    context.drawImage(imageSignAries, element.x, element.y);
+                  }
+                });
+                // context.drawImage(imageSignAries, 0, 0);
               };
               imageSignAries.src = 'assets/resources/png/zodiac/aries.png';
             break;
@@ -158,19 +181,5 @@ export class AppComponent implements AfterViewInit {
     context.strokeStyle = 'black';
     context.stroke();
     context.closePath();*/
-
-  }
-
-  get size() {
-    return this._size;
-  }
-
-  @Input () set size(newValue: number) {
-      this._size = Math.floor(newValue);
-  }
-
-  // Ephemerides
-  constructor() {
-    console.log(this.test);
   }
 }
