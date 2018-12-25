@@ -54,6 +54,49 @@ export class AppComponent implements AfterViewInit {
     context.stroke();
     context.closePath();
 
+    // Trait à 90°
+    context.beginPath();
+    context.moveTo(this._size * 0.5, this._size * 0.5);
+    // context.lineTo(10, 10);
+
+    // trait par degré
+    let step = 2 * Math.PI / 360;
+    let h = this._size * 0.5;
+    let k = this._size * 0.5;
+    let r = 180; // taille du trait
+    let x = 0;
+    let y = 0;
+
+    for (let theta = 0;  theta < 2 * Math.PI;  theta += step) {
+      x = h + r * Math.cos(theta);
+      y = k - r * Math.sin(theta);
+      context.moveTo(this._size * 0.5, this._size * 0.5);
+      context.lineTo(x, y);
+    }
+
+    context.strokeStyle = 'black';
+    context.stroke();
+    context.closePath();
+
+    /* 12 trait à 0° au milieu
+    const step = 2 * Math.PI / 12;
+    const h = this._size * 0.5;
+    const k = this._size * 0.5;
+    const r = 150; // taille du trait
+    let x = 0;
+    let y = 0;
+
+    for (let theta = 0;  theta < 2 * Math.PI;  theta += step) {
+      x = h + r * Math.cos(theta);
+      y = k - r * Math.sin(theta);
+      context.moveTo(this._size * 0.5, this._size * 0.5);
+      context.lineTo(x, y);
+    }
+
+    context.strokeStyle = 'black';
+    context.stroke();
+    context.closePath();*/
+
   }
 
   get size() {
