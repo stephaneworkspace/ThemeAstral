@@ -8,6 +8,7 @@ import { fromEvent, Subscription, from } from 'rxjs';
 import { pairwise, switchMap, takeUntil } from 'rxjs/operators';
 import { getAllPlanets } from 'ephemeris_npm';
 import { AbstractFormGroupDirective } from '@angular/forms';
+import { createText } from '@angular/core/src/view/text';
 
 @Component({
   selector: 'app-root',
@@ -22,7 +23,7 @@ export class AppComponent implements AfterViewInit {
   // test = getAllPlanets(3, 4, 1986, 4, 54, -71.13, 42.27, 0);
   test: any = getAllPlanets('03.04.1986 04:54:00', -71.13, 42.27, 0);
 
-  private _size = 500;
+  private _size = 450;
   @ViewChild('myCanvas') myCanvas: ElementRef;
 
   ngAfterViewInit() {
@@ -31,7 +32,10 @@ export class AppComponent implements AfterViewInit {
     // happy drawing from here on
     context.fillStyle = 'white';
     context.fillRect(0, 0, 450, 450);
-
+    context.beginPath();
+    context.arc(this._size * 0.5, this._size * 0.5, this._size * 0.4, 0, Math.PI * 2, true); // Outer circle
+    context.strokeStyle = 'blue';
+    context.stroke();
   }
 
   get size() {
