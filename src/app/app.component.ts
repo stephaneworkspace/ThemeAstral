@@ -29,15 +29,15 @@ export class AppComponent implements AfterViewInit {
     // wait for the view to init before using the element
     const context: CanvasRenderingContext2D = this.myCanvas.nativeElement.getContext('2d');
     // happy drawing from here on
-    context.fillStyle = 'blue';
-    context.fillRect(10, 10, 150, 150);
+    context.fillStyle = 'white';
+    context.fillRect(10, 10, 300, 300);
   }
 
   get size() {
     return this._size;
   }
 
-  @Input () set size(newValue: number){
+  @Input () set size(newValue: number) {
       this._size = Math.floor(newValue);
   }
 
