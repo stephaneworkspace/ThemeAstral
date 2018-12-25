@@ -28,7 +28,7 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy { // IScen
   // Loading Canvas
   @Input() width = 500;
   @Input() height = 500;
-  @ViewChild('myCanvas') canvasRef: ElementRef;
+  @ViewChild('canvas') canvas: ElementRef;
   cx: CanvasRenderingContext2D;
   drawingSubscription: Subscription;
 
@@ -37,13 +37,27 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy { // IScen
     console.log(this.test);
   }
 
-  // Canvas Context
-  ctx: CanvasRenderingContext2D;
+  ngAfterViewInit() {
+    // Canvas Context
+    const canvasEl: HTMLCanvasElement = this.canvas.nativeElement;
+    this.cx = canvasEl.getContext('2d');
 
+    // set the width and height
+    canvasEl.width = this.width;
+    canvasEl.height = this.height;
+
+    // set some default properties about the line
+    this.cx.lineWidth = 3;
+    this.cx.lineCap = 'round';
+    this.cx.strokeStyle = '#000';
+  }
+
+
+/*
   ngOnInit() {
     this.ctx  = this.canvasRef.nativeElement.getContext('2d');
     this.paint(this.ctx);
-  }
+  }*/
 
   paint(ctx) {
     // ctx.drawImage(this.bubble_img, 0, 0, 70, 50);
@@ -54,8 +68,7 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy { // IScen
     100);
   }
 
-  ngAfterViewInit() {
-  }
+
 
   ngOnDestroy() {
 
