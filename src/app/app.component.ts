@@ -30,7 +30,8 @@ export class AppComponent implements AfterViewInit {
     const context: CanvasRenderingContext2D = this.myCanvas.nativeElement.getContext('2d');
     // happy drawing from here on
     context.fillStyle = 'white';
-    context.fillRect(10, 10, 300, 300);
+    context.fillRect(0, 0, 450, 450);
+
   }
 
   get size() {
