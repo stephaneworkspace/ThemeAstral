@@ -32,6 +32,7 @@ export class AppComponent implements AfterViewInit {
   };
 
   @ViewChild('myCanvas') myCanvas: ElementRef;
+  // @ViewChild('zodiacAries') zodiacAries: ElementRef;
 
   ngAfterViewInit() {
     // wait for the view to init before using the element
@@ -69,6 +70,7 @@ export class AppComponent implements AfterViewInit {
       y = k - r * Math.sin(theta);
       context.moveTo(this._size * 0.5, this._size * 0.5);
       context.lineTo(x, y);
+      // context.drawImage(this.signeBelier, this._size * 0.5, this._size * 0.5);
     }
     context.strokeStyle = 'black';
     context.stroke();
@@ -104,6 +106,39 @@ export class AppComponent implements AfterViewInit {
     context.stroke();
     context.fill();
     context.closePath();
+
+    // AS
+    const imageSignAries = new Image();
+    const imageSignTaurus = new Image();
+    for (let signeOrdre = 0;  signeOrdre <= 12;  signeOrdre += 1) {
+      switch (signeOrdre) {
+        case 1:
+          switch (this._zodiac.ascendant.sign) {
+            case 1:
+              // Début par bélier
+              imageSignAries.onload = function () {
+                context.drawImage(imageSignAries, 0, 0);
+              };
+              imageSignAries.src = 'assets/resources/png/zodiac/aries.png';
+            break;
+          }
+          break;
+        case 2:
+          switch (this._zodiac.ascendant.sign) {
+            case 1:
+              // Début par bélier -> taureau
+              imageSignTaurus.onload = function () {
+                context.drawImage(imageSignTaurus, 130, 130);
+              };
+              imageSignTaurus.src = 'assets/resources/png/zodiac/taurus.png';
+            break;
+          }
+          break;
+      }
+    }
+
+
+
 
     /* bidouille
     const step = 2 * Math.PI / 12;
