@@ -4,7 +4,7 @@ import 'rxjs/add/observable/interval';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/takeWhile';
 import 'rxjs/add/operator/do';
-import { fromEvent, Subscription } from 'rxjs';
+import { fromEvent, Subscription, from } from 'rxjs';
 import { pairwise, switchMap, takeUntil } from 'rxjs/operators';
 import { getAllPlanets } from 'ephemeris_npm';
 import { AbstractFormGroupDirective } from '@angular/forms';
@@ -14,104 +14,35 @@ import { AbstractFormGroupDirective } from '@angular/forms';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit, AfterViewInit, OnDestroy { // IScene {
-  max = 1;
-  current = 0;
+export class AppComponent implements AfterViewInit {
   title = 'ThemeAstral';
-
   // test = calc(3, 4, 1986, 4, 54);
   // result = getAllPlanets('03.04.1986 04:54:00', -71.13, 42.27, 0);
   // 46.202222 lon 6.14569
   // test = getAllPlanets(3, 4, 1986, 4, 54, -71.13, 42.27, 0);
   test: any = getAllPlanets('03.04.1986 04:54:00', -71.13, 42.27, 0);
 
-  // Loading Canvas
-  @Input() width = 500;
-  @Input() height = 500;
-  @ViewChild('canvas') canvas: ElementRef;
-  cx: CanvasRenderingContext2D;
-  drawingSubscription: Subscription;
+  private _size = 500;
+  @ViewChild('myCanvas') myCanvas: ElementRef;
+
+  ngAfterViewInit() {
+    // wait for the view to init before using the element
+    const context: CanvasRenderingContext2D = this.myCanvas.nativeElement.getContext('2d');
+    // happy drawing from here on
+    context.fillStyle = 'blue';
+    context.fillRect(10, 10, 150, 150);
+  }
+
+  get size() {
+    return this._size;
+  }
+
+  @Input () set size(newValue: number){
+      this._size = Math.floor(newValue);
+  }
 
   // Ephemerides
   constructor() {
     console.log(this.test);
-  }
-
-  ngAfterViewInit() {
-    // Canvas Context
-    const canvasEl: HTMLCanvasElement = this.canvas.nativeElement;
-    this.cx = canvasEl.getContext('2d');
-
-    // set the width and height
-    canvasEl.width = this.width;
-    canvasEl.height = this.height;
-
-    // set some default properties about the line
-    this.cx.lineWidth = 3;
-    this.cx.lineCap = 'round';
-    this.cx.strokeStyle = '#000';
-  }
-
-
-/*
-  ngOnInit() {
-    this.ctx  = this.canvasRef.nativeElement.getContext('2d');
-    this.paint(this.ctx);
-  }*/
-
-  paint(ctx) {
-    // ctx.drawImage(this.bubble_img, 0, 0, 70, 50);
-    // FrameRate To Repaint
-    setTimeout(() => {
-      this.paint(ctx);
-    },
-    100);
-  }
-
-
-
-  ngOnDestroy() {
-
-  }
-/*
-  AfterViewInit() {
-  }
-
-  IScene() {
-  }
-*/
-
-
-  /// Start the timer
-  start() {
-    const interval = Observable.interval(100);
-        interval
-          .takeWhile(_ => !this.isFinished )
-          .do(i => this.current += 0.1)
-          .subscribe();
-  }
-
-   /// finish timer
-  finish() {
-    this.current = this.max;
-  }
-
-  /// reset timer
-  reset() {
-    this.current = 0;
-  }
-
-  /// Getters to prevent NaN errors
-
-  get maxVal() {
-    return isNaN(this.max) || this.max < 0.1 ? 0.1 : this.max;
-  }
-
-  get currentVal() {
-    return isNaN(this.current) || this.current < 0 ? 0 : this.current;
-  }
-
-  get isFinished() {
-    return this.currentVal >= this.maxVal;
   }
 }
