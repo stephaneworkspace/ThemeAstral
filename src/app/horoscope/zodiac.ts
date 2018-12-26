@@ -10,7 +10,7 @@ export class Zodiac {
 
         // this.svgImagePath = './resources/svg/zodiac/'; // A FAIRE trouver le bon path
 
-        this.svgImagePath = './resources/svg/zodiac/';
+        this.svgImagePath = './assets/resources/svg/zodiac/';
 
         this.radius = {
             outer: 50,

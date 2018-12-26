@@ -26,7 +26,7 @@ export class Drawer {
     private drawn;
 
     constructor() {
-        const svgImagePath = './resources/svg/planets/';
+        const svgImagePath = './assets/resources/svg/planets/';
 
         this.planetsArray = [{
             number: 1,
@@ -423,7 +423,7 @@ export class Drawer {
     }
 
     drawMoon() {
-        return this.drawPlanet(this.planets.planetsArray.find((elem) => {
+        return this.drawPlanet(this.planetsArray.find((elem) => {
           return elem.name === 'Moon';
         }), this.planets.moon);
     }
@@ -435,7 +435,7 @@ export class Drawer {
     }
 
     drawSaturn() {
-        return this.drawPlanet(this.planets.planetsArray.find((elem) => {
+        return this.drawPlanet(this.planetsArray.find((elem) => {
           return elem.name === 'Saturn';
         }), this.planets.saturn);
     }
@@ -458,20 +458,17 @@ export class Drawer {
         }), this.planets.pluto);
     }
 
-    // Attention peux être
-    /* tslint:disable */
     correctCollidingPlanets(planets) {
-    /* tslint:enable */
-        this.planetsArray = this.planetsArray.sort((a, b) => {
+        planets = planets.sort((a, b) => {
             return a.meta.degree > b.meta.degree;
         });
 
         let planetsCollideInRow = 0;
-        return this.planetsArray.map((planet, i) => {
+        return planets.map((planet, i) => {
             const nextPlanetIndex = i + 1;
 
-            if (nextPlanetIndex in this.planetsArray) {
-                const nextPlanet = this.planetsArray[nextPlanetIndex];
+            if (nextPlanetIndex in planets) {
+                const nextPlanet = planets[nextPlanetIndex];
                 if (this.planetsDoCollide(planet.meta.degree, nextPlanet.meta.degree)) {
                     if (planetsCollideInRow === this.MAX_PLANET_COLLISION_CORRECTION) {
                         planetsCollideInRow = 0;
@@ -497,8 +494,8 @@ export class Drawer {
                     nextPlanet.symbol.attr(correctedPlanetSymbolPosition);
 
 
-                    this.planetsArray[nextPlanetIndex].symbol = nextPlanet.symbol;
-                    this.planetsArray[nextPlanetIndex].background = nextPlanet.background;
+                    planets[nextPlanetIndex].symbol = nextPlanet.symbol;
+                    planets[nextPlanetIndex].background = nextPlanet.background;
                 } else {
                     planetsCollideInRow = 0;
                 }
