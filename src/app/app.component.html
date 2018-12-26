@@ -13,58 +13,61 @@
         </canvas>-->
     </div>
     <br />
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                <div class="form-group">
-                    <label for="Nom">Nom</label>
-                    <input class="form-control" id="inputNom" aria-describedby="nomHelp" placeholder="Entrez votre nom">
-                    <!--<small class="form-text text-muted" id="nomHelp">Votre nom</small>-->
+    <form [formGroup]="saisieForm" (ngSubmit)="onSubmit()">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="Nom">Nom</label>
+                        <input class="form-control" id="inputNom" formControlName="Nom" aria-describedby="nomHelp" placeholder="Entrez votre nom">
+                        <!--<small class="form-text text-muted" id="nomHelp">Votre nom</small>-->
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="Prenom">Prénom</label>
+                        <input class="form-control" id="inputPrenom" formControlName="Prenom" aria-describedby="PrenomHelp" placeholder="Entrez votre prénom">
+                        <!--<small class="form-text text-muted" id="prenomHelp">Votre prénom</small>-->
+                    </div>
                 </div>
             </div>
-            <div class="col">
-                <div class="form-group">
-                    <label for="Prenom">Prénom</label>
-                    <input class="form-control" id="inputPrenom" aria-describedby="PrenomHelp" placeholder="Entrez votre prénom">
-                    <!--<small class="form-text text-muted" id="prenomHelp">Votre prénom</small>-->
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="Jour">Jour de naissance</label>
+                        <input class="form-control" id="inputJour" formControlName="Jour">
+                    </div>
                 </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="Mois">Mois de naissance</label>
+                        <input class="form-control" id="inputMois" formControlName="Mois">
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="Annee">Année de naissance</label>
+                        <input class="form-control" id="inputAnnee" formControlName="Annee">
+                    </div>
+                </div>                
             </div>
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="Heure">Heure naissance</label>
+                        <input class="form-control" id="inputHeure" formControlName="Heure">
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="Minute">Minute de naissance</label>
+                        <input class="form-control" id="inputMinute" formControlName="Minute">
+                    </div>
+                </div>              
+            </div>        
         </div>
-        <div class="row">
-            <div class="col">
-                <div class="form-group">
-                    <label for="Jour">Jour de naissance</label>
-                    <input class="form-control" id="inputJour">
-                </div>
-            </div>
-            <div class="col">
-                <div class="form-group">
-                    <label for="Mois">Mois de naissance</label>
-                    <input class="form-control" id="inputMois">
-                </div>
-            </div>
-            <div class="col">
-                <div class="form-group">
-                    <label for="Annee">Année de naissance</label>
-                    <input class="form-control" id="inputAnnee">
-                </div>
-            </div>                
-        </div>
-        <div class="row">
-            <div class="col">
-                <div class="form-group">
-                    <label for="Heure">Heure naissance</label>
-                    <input class="form-control" id="inputHeure">
-                </div>
-            </div>
-            <div class="col">
-                <div class="form-group">
-                    <label for="Minute">Minute de naissance</label>
-                    <input class="form-control" id="inputMinute">
-                </div>
-            </div>              
-        </div>        
-    </div>
+        <button type="submit" class="btn btn-primary">Afficher thème astral</button>
+    </form>
 
     <!--   
     <h1>Electron Timer</h1>

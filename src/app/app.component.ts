@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, Input, OnDestroy } from '@angular/core';
+import { FormGroup, FormControl } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/interval';
 import 'rxjs/add/operator/map';
@@ -37,6 +38,8 @@ export interface XYDetail {
 
 export class AppComponent implements AfterViewInit, OnInit {
   title = 'ThemeAstral';
+  saisieForm: FormGroup;
+
   // test = calc(3, 4, 1986, 4, 54);
   // result = getAllPlanets('03.04.1986 04:54:00', -71.13, 42.27, 0);
   // 46.202222 lon 6.14569
@@ -60,7 +63,20 @@ export class AppComponent implements AfterViewInit, OnInit {
   constructor() {
   }
 
+  onSubmit(): void {
+    console.log(this.saisieForm.value)
+  }
+
   ngOnInit() {
+    this.saisieForm = new FormGroup({
+      Nom: new FormControl(),
+      Prenom: new FormControl(),
+      Jour: new FormControl(),
+      Mois: new FormControl(),
+      Annee: new FormControl(),
+      Heure: new FormControl(),
+      Minute: new FormControl()
+    });
     this.properties = {
       zodiac: {
         ascendant: {
