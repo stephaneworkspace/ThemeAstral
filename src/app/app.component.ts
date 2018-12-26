@@ -8,6 +8,8 @@ import { fromEvent, Subscription, from } from 'rxjs';
 import { pairwise, switchMap, takeUntil } from 'rxjs/operators';
 import { getAllPlanets } from 'ephemeris_npm';
 
+import { Horoscope } from './horoscope/main';
+
 export interface XY {
   // 216 est le cercle exterieur, celui de 0.5
   xy216: XYDetail;
@@ -50,15 +52,47 @@ export class AppComponent implements AfterViewInit {
   };
   private _arrayZodiac12: Array<XY>;
   private _arrayZodiac: Array<XY210>;
+  private properties;
 
   @ViewChild('myCanvas') myCanvas: ElementRef;
   // @ViewChild('zodiacAries') zodiacAries: ElementRef;
 
   constructor() {
-    /*
+
+    this.properties = {
+      zodiac: {
+        ascendant: {
+          sign: 1,      // Sets ascendant by sign. See src/zodiac.js.
+          degree: 1.15    // Sets degree offset for ascendant sign.
+        }
+      },
+      planets: {        // Sets degree of planets.
+        sun: 65,
+        mercury: 12,
+        venus: 151.31,
+        mars: 231,
+        moon: 188,
+        jupiter: 311,
+        saturn: 100,
+        uranus: 199,
+        neptune: 278,
+        pluto: 31
+      },
+      houses: {
+        hasHouses: true,
+        axes: {
+          axis2to8: 27,   // Sets degree of axis.
+          axis3to9: 56,
+          axis4to10: 81,
+          axis5to11: 114,
+          axis6to12: 156
+        }
+      }
+    };
+
     const h = new Horoscope(this.properties);
-    const drawn = h.drawn('#horoscope');
-    console.log('Hurray! You have drawn your horoscope.', drawn);*/
+    const drawn = h.draw('#horoscope');
+    console.log('Hurray! You have drawn your horoscope.', drawn);
   }
 
   ngAfterViewInit() {

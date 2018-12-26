@@ -1,16 +1,22 @@
-import { Calc } from './calc'
+import { Calc } from './calc';
+import { elements } from './elements';
+import { zodiac } from './zodiac';
+import { planets } from './planets';
 import { drawer } from './drawer';
 
 export class Horoscope {
+    private _elements;
+    private _zodiac;
+    private _planets;
     private _drawer;
     private _properties;
     private validPlanetProperties;
     private validHousesAxesProperties;
 
     constructor(properties) {
-        // this._elements = elements;
-        // this._zodiac = zodiac;
-        // this._planets = planets;
+        this._elements = elements;
+        this._zodiac = zodiac;
+        this._planets = planets;
         this._drawer = drawer;
 
         this.validPlanetProperties = [
@@ -44,6 +50,41 @@ export class Horoscope {
         this.validateProperties(this._properties);
     }
 
+
+    get elements() {
+        return this._elements;
+    }
+
+    set elements(value) {
+        this._elements = value;
+    }
+
+    get zodiac() {
+        return this._zodiac;
+    }
+
+    set zodiac(value) {
+        this._zodiac = value;
+    }
+
+    get planets() {
+        return this._planets;
+    }
+
+    set planets(value) {
+        this._planets = value;
+    }
+
+    /**
+     * Draws a horoscope.
+     * @param selector selection
+     * @return Returns an object with snap objects.
+     */
+    draw(selector) {
+        this._properties.selector = selector;
+        return this._drawer.draw(this._properties);
+    }
+
     /**
      * Sets default properties if no properties had been passed via constructor parameter.
      */
@@ -53,7 +94,8 @@ export class Horoscope {
         this._properties.zodiac.ascendant = {
             sign: Calc.getRandomInt(0, 11),
             degree: Calc.getRandomArbitrary(0, 30)
-        }
+        };
+
         this._properties.planets = {};
         this._properties.planets.sun = Calc.getRandomArbitrary(0, 360);
         this._properties.planets.mercury = Calc.getRandomArbitrary(0, 360);
@@ -129,29 +171,30 @@ export class Horoscope {
         const validHousesAxes = this.validHousesAxesProperties;
 
         if (!properties.hasOwnProperty('houses')) {
-          throw new Error('The "houses" is required.');
+            throw new Error('The "houses" is required.');
         }
         if (!properties.houses.hasOwnProperty('hasHouses')) {
-          throw new Error('The "houses" property requires "hasHouses" property to be set.');
+            throw new Error('The "houses" property requires "hasHouses" property to be set.');
         }
         if (typeof(properties.houses.hasHouses) !== 'boolean') {
-          throw new Error('The "houses" property requires "hasHouses" property to be of type boolean set.');
+            throw new Error('The "houses" property requires "hasHouses" property to be of type boolean set.');
         }
         if (properties.houses.hasHouses) {
-          if (!properties.houses.hasOwnProperty('axes')) {
-            throw new Error('No "axes" property set for horoscope.');
-          }
-          if (Object.keys(properties.houses.axes).length !== validHousesAxes.length) {
-            throw new Error('A horoscope with "houses" requires exactly ' + validHousesAxes.length + ' axes to be set.');
-          }
-          const invalidHousesAxes = Object.keys(properties.houses.axes).filter(elem => {
-            if (!validHousesAxes.includes(elem)) {
-              return true;
+            if (!properties.houses.hasOwnProperty('axes')) {
+                throw new Error('No "axes" property set for horoscope.');
             }
-            return false;
-          });
-          if (invalidHousesAxes.length > 0) {
-            throw new Error('The "houses" property has invalid axes set.');
-          }
+            if (Object.keys(properties.houses.axes).length !== validHousesAxes.length) {
+                throw new Error('A horoscope with "houses" requires exactly ' + validHousesAxes.length + ' axes to be set.');
+            }
+            const invalidHousesAxes = Object.keys(properties.houses.axes).filter(elem => {
+                if (!validHousesAxes.includes(elem)) {
+                    return true;
+                }
+                return false;
+                });
+            if (invalidHousesAxes.length > 0) {
+                throw new Error('The "houses" property has invalid axes set.');
+            }
         }
+    }
 }
