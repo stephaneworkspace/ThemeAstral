@@ -54,6 +54,13 @@ export class AppComponent implements AfterViewInit {
   @ViewChild('myCanvas') myCanvas: ElementRef;
   // @ViewChild('zodiacAries') zodiacAries: ElementRef;
 
+  constructor() {
+    /*
+    const h = new Horoscope(this.properties);
+    const drawn = h.drawn('#horoscope');
+    console.log('Hurray! You have drawn your horoscope.', drawn);*/
+  }
+
   ngAfterViewInit() {
     let self = this;
     this._arrayZodiac12 = [];
@@ -179,14 +186,17 @@ export class AppComponent implements AfterViewInit {
     context.closePath();
 
     // Cercle à 0.4 pour effacer les fracal 360°
+
+    /*
     context.beginPath();
     context.arc(this._size * 0.5, this._size * 0.5, this._size * 0.38, 0, Math.PI * 2, false); // Outer circle
     context.strokeStyle = 'white';
     context.stroke();
     context.fill();
-    context.closePath();
+    context.closePath(); */
 
     // AS
+    /*
     const imageSignAries = new Image();
     const imageSignTaurus = new Image();
     console.log(this._arrayZodiac12);
@@ -228,6 +238,11 @@ export class AppComponent implements AfterViewInit {
       }
     }
 
+    // Test rotation
+
+    // context.rotate(30);
+    // context.restore();
+*/
 
 
 
