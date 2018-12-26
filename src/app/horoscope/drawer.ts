@@ -169,8 +169,8 @@ export class Drawer {
 
     drawZodiacCircles() {
         const circles = {
-            outer: this.snap.circle(0, 0, zodiac.radius.outer).attr({ fill: '#FFF', stroke: '#000' }),
-            inner: this.snap.circle(0, 0, zodiac.radius.inner).attr({ fill: '#FFF', stroke: '#000' }),
+            outer: this.snap.circle(0, 0, zodiac.radius.outer).attr({ fill: '#FFF', stroke: '#000', strokeWidth: 0.2 }),
+            inner: this.snap.circle(0, 0, zodiac.radius.inner).attr({ fill: '#FFF', stroke: '#000', strokeWidth: 0.2 }),
             innerAuxiliary: this.snap.circle(0, 0, zodiac.radius.innerAuxiliary).attr({ fill: '#FFF', stroke: '#000', strokeWidth: 0.2 }),
         };
 
