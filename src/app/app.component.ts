@@ -9,9 +9,13 @@ import { pairwise, switchMap, takeUntil } from 'rxjs/operators';
 import { getAllPlanets } from 'ephemeris_npm';
 
 export interface XY {
+  xy216: XY216;
+  itemNumber: number;
+}
+
+export interface XY216 {
   x: number;
   y: number;
-  itemNumber: number;
 }
 
 @Component({
@@ -72,18 +76,23 @@ export class AppComponent implements AfterViewInit {
     let r = 216; // taille du trait
     let x = 0;
     let y = 0;
-    let itemNumber = 0;
+    let itemNumber = 4;
 
     for (let theta = 0 - this._zodiac.ascendant.degree;  theta < (2 * Math.PI) - this._zodiac.ascendant.degree;  theta += step) {
       itemNumber++;
+      if (itemNumber > 12) {
+        itemNumber = 1;
+      }
       x = h + r * Math.cos(theta);
       y = k - r * Math.sin(theta);
       context.moveTo(this._size * 0.5, this._size * 0.5);
       context.lineTo(x, y);
 
       this._arrayZodiac12.push({
-        x: x,
-        y: y,
+        xy216: {
+          x: x,
+          y: y,
+        },
         itemNumber: itemNumber
       });
 
@@ -127,6 +136,7 @@ export class AppComponent implements AfterViewInit {
     // AS
     const imageSignAries = new Image();
     const imageSignTaurus = new Image();
+    console.log(this._arrayZodiac12);
     for (let signeOrdre = 0;  signeOrdre <= 12;  signeOrdre += 1) {
       switch (signeOrdre) {
         case 1:
@@ -137,10 +147,9 @@ export class AppComponent implements AfterViewInit {
               imageSignAries.onload = function (e: any)  {
                 self._arrayZodiac12.forEach(element => {
                   if (element.itemNumber === 1) {
-                    context.drawImage(imageSignAries, element.x, element.y);
+                    context.drawImage(imageSignAries, element.xy216.x, element.xy216.y);
                   }
                 });
-                // context.drawImage(imageSignAries, 0, 0);
               };
               imageSignAries.src = 'assets/resources/png/zodiac/aries.png';
             break;
@@ -150,8 +159,13 @@ export class AppComponent implements AfterViewInit {
           switch (this._zodiac.ascendant.sign) {
             case 1:
               // Début par bélier -> taureau
+              self = this;
               imageSignTaurus.onload = function () {
-                context.drawImage(imageSignTaurus, 130, 130);
+                self._arrayZodiac12.forEach(element => {
+                  if (element.itemNumber === 2) {
+                    context.drawImage(imageSignTaurus, element.xy216.x, element.xy216.y);
+                  }
+                });
               };
               imageSignTaurus.src = 'assets/resources/png/zodiac/taurus.png';
             break;
