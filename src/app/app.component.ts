@@ -11,6 +11,7 @@ import { getAllPlanets } from 'ephemeris_npm';
 
 import { Horoscope } from './horoscope/main';
 
+/*
 export interface XY {
   // 216 est le cercle exterieur, celui de 0.5
   xy216: XYDetail;
@@ -28,7 +29,7 @@ export interface XY210 {
 export interface XYDetail {
   x: number;
   y: number;
-}
+}*/
 
 @Component({
   selector: 'app-root',
@@ -46,7 +47,8 @@ export class AppComponent implements AfterViewInit, OnInit {
   // result = getAllPlanets('03.04.1986 04:54:00', -71.13, 42.27, 0);
   // 46.202222 lon 6.14569
   // test = getAllPlanets(3, 4, 1986, 4, 54, -71.13, 42.27, 0);
-  test: any = getAllPlanets('03.04.1986 04:54:00', -71.13, 42.27, 0);
+
+  // test: any = getAllPlanets('03.04.1986 04:54:00', -71.13, 42.27, 0);
 
   private _size = 450;
   private _zodiac = {
@@ -55,8 +57,9 @@ export class AppComponent implements AfterViewInit, OnInit {
       degree: 1.15
     }
   };
+  /*
   private _arrayZodiac12: Array<XY>;
-  private _arrayZodiac: Array<XY210>;
+  private _arrayZodiac: Array<XY210>;*/
   private properties;
 
   @ViewChild('myCanvas') myCanvas: ElementRef;
@@ -68,6 +71,46 @@ export class AppComponent implements AfterViewInit, OnInit {
   onSubmit(): void {
     console.log(this.saisieForm.value);
     this.swForm = false;
+    const ephem = getAllPlanets('03.04.1986 04:54:00', -71.13, 42.27, 0);
+    console.log(ephem);
+
+
+
+    this.properties = {
+      zodiac: {
+        ascendant: {
+          sign: 1,      // Sets ascendant by sign. See src/zodiac.js.
+          degree: 1.15    // Sets degree offset for ascendant sign.
+        }
+      },
+      planets: {        // Sets degree of planets.
+        sun: ephem.observed.sun.apparentLongitudeDd,
+        mercury: ephem.observed.mercury.apparentLongitudeDd,
+        venus: ephem.observed.venus.apparentLongitudeDd,
+        mars: ephem.observed.mars.apparentLongitudeDd,
+        moon: ephem.observed.moon.apparentLongitudeDd,
+        jupiter: ephem.observed.jupiter.apparentLongitudeDd,
+        saturn: ephem.observed.saturn.apparentLongitudeDd,
+        uranus: ephem.observed.uranus.apparentLongitudeDd,
+        neptune: ephem.observed.neptune.apparentLongitudeDd,
+        pluto: ephem.observed.pluto.apparentLongitudeDd,
+      },
+      houses: {
+        hasHouses: true,
+        axes: {
+          axis2to8: 27,   // Sets degree of axis.
+          axis3to9: 56,
+          axis4to10: 81,
+          axis5to11: 114,
+          axis6to12: 156
+        }
+      }
+    };
+
+    const h = new Horoscope(this.properties);
+    const drawn = h.draw('#horoscope');
+    console.log('Hurray! You have drawn your horoscope.', drawn);
+
   }
 
   ngOnInit() {
@@ -117,6 +160,7 @@ export class AppComponent implements AfterViewInit, OnInit {
   }
 
   ngAfterViewInit() {
+/*
     let self = this;
     this._arrayZodiac12 = [];
     this._arrayZodiac = [];
@@ -239,85 +283,6 @@ export class AppComponent implements AfterViewInit, OnInit {
     context.strokeStyle = 'black';
     context.stroke();
     context.closePath();
-
-    // Cercle à 0.4 pour effacer les fracal 360°
-
-    /*
-    context.beginPath();
-    context.arc(this._size * 0.5, this._size * 0.5, this._size * 0.38, 0, Math.PI * 2, false); // Outer circle
-    context.strokeStyle = 'white';
-    context.stroke();
-    context.fill();
-    context.closePath(); */
-
-    // AS
-    /*
-    const imageSignAries = new Image();
-    const imageSignTaurus = new Image();
-    console.log(this._arrayZodiac12);
-    console.log(this._arrayZodiac);
-    for (let signeOrdre = 0;  signeOrdre <= 12;  signeOrdre += 1) {
-      switch (signeOrdre) {
-        case 1:
-          switch (this._zodiac.ascendant.sign) {
-            case 1:
-              // Début par bélier
-              self = this;
-              imageSignAries.onload = function (e: any)  {
-                self._arrayZodiac.forEach(element => {
-                  if (element.itemNumber === 1) {
-                    context.drawImage(imageSignAries, element.xy210.x, element.xy210.y);
-                  }
-                });
-              };
-              imageSignAries.src = 'assets/resources/png/zodiac/aries.png';
-            break;
-          }
-          break;
-        case 2:
-          switch (this._zodiac.ascendant.sign) {
-            case 1:
-              // Début par bélier -> taureau
-              self = this;
-              imageSignTaurus.onload = function () {
-                self._arrayZodiac.forEach(element => {
-                  if (element.itemNumber === 2) {
-                    context.drawImage(imageSignTaurus, element.xy210.x, element.xy210.y);
-                  }
-                });
-              };
-              imageSignTaurus.src = 'assets/resources/png/zodiac/taurus.png';
-            break;
-          }
-          break;
-      }
-    }
-
-    // Test rotation
-
-    // context.rotate(30);
-    // context.restore();
 */
-
-
-
-    /* bidouille
-    const step = 2 * Math.PI / 12;
-    const h = this._size * 0.5;
-    const k = this._size * 0.5;
-    const r = 150; // taille du trait
-    let x = 0;
-    let y = 0;
-
-    for (let theta = 0;  theta < 2 * Math.PI;  theta += step) {
-      x = h + r * Math.cos(theta);
-      y = k - r * Math.sin(theta);
-      context.moveTo(this._size * 0.5, this._size * 0.5);
-      context.lineTo(x, y);
-    }
-
-    context.strokeStyle = 'black';
-    context.stroke();
-    context.closePath();*/
   }
 }
