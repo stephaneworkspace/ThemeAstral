@@ -170,8 +170,8 @@ export class Drawer {
     drawZodiacCircles() {
         const circles = {
             outer: this.snap.circle(0, 0, zodiac.radius.outer).attr({ fill: '#FFF', stroke: '#000', strokeWidth: 0.2 }),
-            inner: this.snap.circle(0, 0, zodiac.radius.inner).attr({ fill: '#FFF', stroke: '#000', strokeWidth: 0.2 }),
-            innerAuxiliary: this.snap.circle(0, 0, zodiac.radius.innerAuxiliary).attr({ fill: '#FFF', stroke: '#000', strokeWidth: 0.2 }),
+            inner: this.snap.circle(0, 0, zodiac.radius.inner).attr({ fill: '#FFF', stroke: '#000', strokeWidth: 0.5 }),
+            innerAuxiliary: this.snap.circle(0, 0, zodiac.radius.innerAuxiliary).attr({ fill: '#FFF', stroke: '#000', strokeWidth: 0.5 }),
         };
 
         circles.outer.addClass('zodiac-circle-outer');
@@ -213,6 +213,20 @@ export class Drawer {
                 zodiacDegree
             });
         }
+
+        // Liaison Soleil à Saturne, bidouille
+        if (this.planets.sun != null && this.planets.saturn != null) {
+            const linePoint1 = Calc.getPointOnCircle(zodiac.radius.inner, this.planets.sun, 0);
+            const linePoint2 = Calc.getPointOnCircle(zodiac.radius.inner, this.planets.saturn, 0);
+            const planetAuxiliaryLine = this.snap.line(linePoint1.x, linePoint1.y, linePoint2.x, linePoint2.y).attr(
+                {
+                    fill: '#FFF',
+                    stroke: '#000',
+                    strokeWidth: 0.3
+                }
+            );
+        }
+
         return degrees;
     }
 
@@ -440,7 +454,9 @@ export class Drawer {
 
         const planetBackgroundPosition = Calc.getPointOnCircle(zodiac.radius.inner, degree, this.PLANET_RADIUS_OFFSET);
         const planetBackgroundRadius = this.getPlanetBackgroundRadius();
-        const planetBackground = this.snap.circle(planetBackgroundPosition.x, planetBackgroundPosition.y, planetBackgroundRadius);
+        const planetBackground = this.snap.circle(planetBackgroundPosition.x, planetBackgroundPosition.y, planetBackgroundRadius).attr(
+            { fill: '#AAA' }
+        );
         planetBackground.addClass('planet-background');
 
         const planetSymbolPosition = this.getPlanetSymbolPosition(planetBackgroundPosition);
@@ -448,7 +464,9 @@ export class Drawer {
                             planetSymbolPosition.x,
                             planetSymbolPosition.y,
                             this.PLANET_IMAGE_WIDTH,
-                            this.PLANET_IMAGE_HEIGHT);
+                            this.PLANET_IMAGE_HEIGHT).click(function () {
+                                alert(planet.name);
+                             });
 
         const meta = {};
         Object.assign(meta, planet);
