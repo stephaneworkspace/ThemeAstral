@@ -5,9 +5,12 @@ declare var Snap: any;
 
 import { Calc } from './calc';
 import { zodiac } from './zodiac';
-import { planets } from './planets';
+// import { planets, planetsArray } from './planets';
 
 export class Drawer {
+    // probleme avec import
+    private planetsArray;
+
     private selector;
 
     private PLANET_IMAGE_WIDTH;
@@ -21,6 +24,62 @@ export class Drawer {
     private houses;
     private snap;
     private drawn;
+
+    constructor() {
+        const svgImagePath = './resources/svg/planets/';
+
+        this.planetsArray = [{
+            number: 1,
+            name: 'Sun',
+            symbol: '☉',
+            imageUrl: svgImagePath + 'sun.svg',
+        }, {
+            number: 2,
+            name: 'Mercury',
+            symbol: '☿',
+            imageUrl: svgImagePath + 'mercury.svg',
+        }, {
+            number: 3,
+            name: 'Venus',
+            symbol: '♀',
+            imageUrl: svgImagePath + 'venus.svg',
+        }, {
+            number: 4,
+            name: 'Mars',
+            symbol: '♂',
+            imageUrl: svgImagePath + 'mars.svg',
+        }, {
+            number: 5,
+            name: 'Moon',
+            symbol: '☽',
+            imageUrl: svgImagePath + 'moon.svg',
+        }, {
+            number: 6,
+            name: 'Jupiter',
+            symbol: '♃',
+            imageUrl: svgImagePath + 'jupiter.svg',
+        }, {
+            number: 7,
+            name: 'Saturn',
+            symbol: '♄',
+            imageUrl: svgImagePath + 'saturn.svg',
+        }, {
+            number: 8,
+            name: 'Uranus',
+            symbol: '⛢',
+            imageUrl: svgImagePath + 'uranus.svg',
+        }, {
+            number: 9,
+            name: 'Neptune',
+            symbol: '♆',
+            imageUrl: svgImagePath + 'neptune.svg',
+        }, {
+            number: 10,
+            name: 'Pluto',
+            symbol: '♇',
+            imageUrl: svgImagePath + 'pluto.svg',
+        }];
+    }
 
     draw(properties) {
         if (properties.hasOwnProperty('selector')) {
@@ -340,61 +399,61 @@ export class Drawer {
     }
 
     drawSun() {
-        return this.drawPlanet(planets.planetsArray.find((elem) => {
+        return this.drawPlanet(this.planetsArray.find((elem) => {
             return elem.name === 'Sun';
         }), this.planets.sun);
     }
 
     drawMercury() {
-        return this.drawPlanet(planets.planetsArray.find((elem) => {
+        return this.drawPlanet(this.planetsArray.find((elem) => {
           return elem.name === 'Mercury';
         }), this.planets.mercury);
     }
 
     drawVenus() {
-        return this.drawPlanet(planets.planetsArray.find((elem) => {
+        return this.drawPlanet(this.planetsArray.find((elem) => {
           return elem.name === 'Venus';
         }), this.planets.venus);
     }
 
     drawMars() {
-        return this.drawPlanet(planets.planetsArray.find((elem) => {
+        return this.drawPlanet(this.planetsArray.find((elem) => {
           return elem.name === 'Mars';
         }), this.planets.mars);
     }
 
     drawMoon() {
-        return this.drawPlanet(planets.planetsArray.find((elem) => {
+        return this.drawPlanet(this.planets.planetsArray.find((elem) => {
           return elem.name === 'Moon';
         }), this.planets.moon);
     }
 
     drawJupiter() {
-        return this.drawPlanet(planets.planetsArray.find((elem) => {
+        return this.drawPlanet(this.planetsArray.find((elem) => {
           return elem.name === 'Jupiter';
         }), this.planets.jupiter);
     }
 
     drawSaturn() {
-        return this.drawPlanet(planets.planetsArray.find((elem) => {
+        return this.drawPlanet(this.planets.planetsArray.find((elem) => {
           return elem.name === 'Saturn';
         }), this.planets.saturn);
     }
 
     drawUranus() {
-        return this.drawPlanet(planets.planetsArray.find((elem) => {
+        return this.drawPlanet(this.planetsArray.find((elem) => {
           return elem.name === 'Uranus';
         }), this.planets.uranus);
     }
 
     drawNeptune() {
-        return this.drawPlanet(planets.planetsArray.find((elem) => {
+        return this.drawPlanet(this.planetsArray.find((elem) => {
           return elem.name === 'Neptune';
         }), this.planets.neptune);
     }
 
     drawPluto() {
-        return this.drawPlanet(planets.planetsArray.find((elem) => {
+        return this.drawPlanet(this.planetsArray.find((elem) => {
           return elem.name === 'Pluto';
         }), this.planets.pluto);
     }
@@ -403,16 +462,16 @@ export class Drawer {
     /* tslint:disable */
     correctCollidingPlanets(planets) {
     /* tslint:enable */
-        planets.planetsArray = planets.planetsArray.sort((a, b) => {
-          return a.meta.degree > b.meta.degree;
+        this.planetsArray = this.planetsArray.sort((a, b) => {
+            return a.meta.degree > b.meta.degree;
         });
 
         let planetsCollideInRow = 0;
-        return planets.planetsArray.map((planet, i) => {
+        return this.planetsArray.map((planet, i) => {
             const nextPlanetIndex = i + 1;
 
-            if (nextPlanetIndex in planets.planetsArray) {
-                const nextPlanet = planets.planetsArray[nextPlanetIndex];
+            if (nextPlanetIndex in this.planetsArray) {
+                const nextPlanet = this.planetsArray[nextPlanetIndex];
                 if (this.planetsDoCollide(planet.meta.degree, nextPlanet.meta.degree)) {
                     if (planetsCollideInRow === this.MAX_PLANET_COLLISION_CORRECTION) {
                         planetsCollideInRow = 0;
@@ -438,8 +497,8 @@ export class Drawer {
                     nextPlanet.symbol.attr(correctedPlanetSymbolPosition);
 
 
-                    planets.planetsArray[nextPlanetIndex].symbol = nextPlanet.symbol;
-                    planets.planetsArray[nextPlanetIndex].background = nextPlanet.background;
+                    this.planetsArray[nextPlanetIndex].symbol = nextPlanet.symbol;
+                    this.planetsArray[nextPlanetIndex].background = nextPlanet.background;
                 } else {
                     planetsCollideInRow = 0;
                 }

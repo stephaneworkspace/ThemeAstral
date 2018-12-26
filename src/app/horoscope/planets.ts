@@ -57,3 +57,4 @@ class Planets {
     }
   }
   export let planets = new Planets();
+ // export let planetsArray = this.planetsArray;
