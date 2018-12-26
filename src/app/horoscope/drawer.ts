@@ -99,33 +99,38 @@ export class Drawer {
         this.houses = (properties.hasOwnProperty('houses')) ? properties.houses : null;
 
         this.snap = Snap(this.selector);
-        this.snap.attr({viewBox: '-50 -50 100 100'});
+        this.snap.attr(
+            {
+                viewBox: '-50 -50 100 100',
+                fill: '#FFFFFF'
+            }
+        );
 
         this.drawn = {
             circles: this.drawZodiacCircles(),
             degrees: this.drawZodiacDegrees(),
             zodiac: {
-              signs: this.drawZodiacSigns(properties.zodiac.ascendant.sign, properties.zodiac.ascendant.degree),
-              ascendant: {
-                signIndex: properties.zodiac.ascendant.sign,
-                correctedByDegrees: properties.zodiac.ascendant.degree,
+                signs: this.drawZodiacSigns(properties.zodiac.ascendant.sign, properties.zodiac.ascendant.degree),
+                ascendant: {
+                    signIndex: properties.zodiac.ascendant.sign,
+                    correctedByDegrees: properties.zodiac.ascendant.degree,
               }
             },
             houses: {
-              axes: this.drawHousesAxes(),
-              meta: this.houses
+                axes: this.drawHousesAxes(),
+                meta: this.houses
             },
             planets: [
-              this.drawSun(),
-              this.drawMercury(),
-              this.drawVenus(),
-              this.drawMars(),
-              this.drawMoon(),
-              this.drawJupiter(),
-              this.drawSaturn(),
-              this.drawUranus(),
-              this.drawNeptune(),
-              this.drawPluto()
+                this.drawSun(),
+                this.drawMercury(),
+                this.drawVenus(),
+                this.drawMars(),
+                this.drawMoon(),
+                this.drawJupiter(),
+                this.drawSaturn(),
+                this.drawUranus(),
+                this.drawNeptune(),
+                this.drawPluto()
             ]
         };
 
@@ -147,9 +152,9 @@ export class Drawer {
 
     drawZodiacCircles() {
         const circles = {
-            outer: this.snap.circle(0, 0, zodiac.radius.outer),
-            inner: this.snap.circle(0, 0, zodiac.radius.inner),
-            innerAuxiliary: this.snap.circle(0, 0, zodiac.radius.innerAuxiliary)
+            outer: this.snap.circle(0, 0, zodiac.radius.outer).attr({ fill: '#FFF', stroke: '#000' }),
+            inner: this.snap.circle(0, 0, zodiac.radius.inner).attr({ fill: '#FFF', stroke: '#000' }),
+            innerAuxiliary: this.snap.circle(0, 0, zodiac.radius.innerAuxiliary).attr({ fill: '#FFF', stroke: '#000' }),
         };
 
         circles.outer.addClass('zodiac-circle-outer');
@@ -169,7 +174,13 @@ export class Drawer {
             const point1 = Calc.getPointOnCircle(radius, degree, 0);
             const point2 = Calc.getPointOnCircle(radius, degree, offsetFromRadius);
 
-            const zodiacDegree = this.snap.line(point1.x, point1.y, point2.x, point2.y);
+            const zodiacDegree = this.snap.line(point1.x, point1.y, point2.x, point2.y).attr(
+                {
+                    fill: '#FFF',
+                    stroke: '#000',
+                    strokeWidth: 0.2
+                }
+            );
             zodiacDegree.attr({
                 index: degree
             });
@@ -354,7 +365,13 @@ export class Drawer {
     drawPlanet(planet, degree) {
         const linePoint1 = Calc.getPointOnCircle(zodiac.radius.inner, degree, 0);
         const linePoint2 = Calc.getPointOnCircle(zodiac.radius.inner, degree, 1);
-        const planetAuxiliaryLine = this.snap.line(linePoint1.x, linePoint1.y, linePoint2.x, linePoint2.y);
+        const planetAuxiliaryLine = this.snap.line(linePoint1.x, linePoint1.y, linePoint2.x, linePoint2.y).attr(
+            {
+                fill: '#FFF',
+                stroke: '#000',
+                strokeWidth: 0.2
+            }
+        );
         planetAuxiliaryLine.addClass('planet-auxiliary-line')
 
         const planetBackgroundPosition = Calc.getPointOnCircle(zodiac.radius.inner, degree, this.PLANET_RADIUS_OFFSET);

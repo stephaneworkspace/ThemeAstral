@@ -6,7 +6,7 @@ function createWindow () {
   // Create the browser window.
   win = new BrowserWindow({
     width: 600, 
-    height: 600,
+    height: 626,
     backgroundColor: '#ffffff',
     icon: `file://${__dirname}/dist/ThemeAstral/assets/logo.png`
   })
