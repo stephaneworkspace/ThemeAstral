@@ -9,11 +9,20 @@ import { pairwise, switchMap, takeUntil } from 'rxjs/operators';
 import { getAllPlanets } from 'ephemeris_npm';
 
 export interface XY {
-  xy216: XY216;
+  // 216 est le cercle exterieur, celui de 0.5
+  xy216: XYDetail;
+  // 180 est le cercle intérieur
+  xy180: XYDetail;
   itemNumber: number;
 }
 
-export interface XY216 {
+export interface XY210 {
+  // 210 est entre les 2 cercles plus proche de celui de 0.5
+  xy210: XYDetail;
+  itemNumber: number;
+}
+
+export interface XYDetail {
   x: number;
   y: number;
 }
@@ -40,6 +49,7 @@ export class AppComponent implements AfterViewInit {
     }
   };
   private _arrayZodiac12: Array<XY>;
+  private _arrayZodiac: Array<XY210>;
 
   @ViewChild('myCanvas') myCanvas: ElementRef;
   // @ViewChild('zodiacAries') zodiacAries: ElementRef;
@@ -47,6 +57,7 @@ export class AppComponent implements AfterViewInit {
   ngAfterViewInit() {
     let self = this;
     this._arrayZodiac12 = [];
+    this._arrayZodiac = [];
     // wait for the view to init before using the element
     const context: CanvasRenderingContext2D = this.myCanvas.nativeElement.getContext('2d');
     // happy drawing from here on
@@ -93,6 +104,10 @@ export class AppComponent implements AfterViewInit {
           x: x,
           y: y,
         },
+        xy180: {
+          x: h + 180 * Math.cos(theta),
+          y: h - 180 * Math.sin(theta),
+        },
         itemNumber: itemNumber
       });
 
@@ -101,6 +116,44 @@ export class AppComponent implements AfterViewInit {
     context.strokeStyle = 'black';
     context.stroke();
     context.closePath();
+
+
+    // 12 signes astrologique au milieu donc division par 24
+    // avec prise en charge uniquement des paires
+
+    step = 2 * Math.PI / 24;
+    h = this._size * 0.5;
+    k = this._size * 0.5;
+    r = 210; // taille du trait
+    x = 0;
+    y = 0;
+    let itemNumber24 = 8;
+    let itemNumberDivide = 0;
+
+    for (let theta = 0 - this._zodiac.ascendant.degree;  theta < (2 * Math.PI) - this._zodiac.ascendant.degree;  theta += step) {
+    itemNumber24++;
+      if (itemNumber24 > 24) {
+        itemNumber24 = 1;
+      }
+      x = h + r * Math.cos(theta);
+      y = k - r * Math.sin(theta);
+      context.moveTo(this._size * 0.5, this._size * 0.5);
+      context.lineTo(x, y);
+
+      if (itemNumber24 % 2 === 0) {
+        itemNumberDivide = itemNumber24 / 2;
+        this._arrayZodiac.push({
+          xy210: {
+            x: x,
+            y: y,
+          },
+          itemNumber: itemNumberDivide
+        });
+      }
+
+    }
+
+
 
     // 360 Traits jusqu'au centre
     context.beginPath();
@@ -137,6 +190,7 @@ export class AppComponent implements AfterViewInit {
     const imageSignAries = new Image();
     const imageSignTaurus = new Image();
     console.log(this._arrayZodiac12);
+    console.log(this._arrayZodiac);
     for (let signeOrdre = 0;  signeOrdre <= 12;  signeOrdre += 1) {
       switch (signeOrdre) {
         case 1:
@@ -145,9 +199,9 @@ export class AppComponent implements AfterViewInit {
               // Début par bélier
               self = this;
               imageSignAries.onload = function (e: any)  {
-                self._arrayZodiac12.forEach(element => {
+                self._arrayZodiac.forEach(element => {
                   if (element.itemNumber === 1) {
-                    context.drawImage(imageSignAries, element.xy216.x, element.xy216.y);
+                    context.drawImage(imageSignAries, element.xy210.x, element.xy210.y);
                   }
                 });
               };
@@ -161,9 +215,9 @@ export class AppComponent implements AfterViewInit {
               // Début par bélier -> taureau
               self = this;
               imageSignTaurus.onload = function () {
-                self._arrayZodiac12.forEach(element => {
+                self._arrayZodiac.forEach(element => {
                   if (element.itemNumber === 2) {
-                    context.drawImage(imageSignTaurus, element.xy216.x, element.xy216.y);
+                    context.drawImage(imageSignTaurus, element.xy210.x, element.xy210.y);
                   }
                 });
               };
