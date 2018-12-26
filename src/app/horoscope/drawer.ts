@@ -311,7 +311,7 @@ export class Drawer {
 
 
 
-            const zodiacSignPosition = Calc.getPointOnCircle(zodiac.radius.betweenOuterInner, degreeBetweenSigns, 0)
+            const zodiacSignPosition = Calc.getPointOnCircle(zodiac.radius.betweenOuterInner, degreeBetweenSigns, 0);
             const zodiacSignImagePositionX = zodiacSignPosition.x - zodiacSignImageWidth / 2;
             const zodiacSignImagePositionY = zodiacSignPosition.y - zodiacSignImageHeight / 2;
             const zodiacSignSymbol = this.snap.image(signObj.imageUrl,
@@ -428,15 +428,15 @@ export class Drawer {
 
     drawPlanet(planet, degree) {
         const linePoint1 = Calc.getPointOnCircle(zodiac.radius.inner, degree, 0);
-        const linePoint2 = Calc.getPointOnCircle(zodiac.radius.inner, degree, 1);
+        const linePoint2 = Calc.getPointOnCircle(zodiac.radius.inner, degree, 0); // 1 pas très beau 10 pour comprendre
         const planetAuxiliaryLine = this.snap.line(linePoint1.x, linePoint1.y, linePoint2.x, linePoint2.y).attr(
             {
                 fill: '#FFF',
                 stroke: '#000',
-                strokeWidth: 0.2
+                strokeWidth: 0.3
             }
         );
-        planetAuxiliaryLine.addClass('planet-auxiliary-line')
+        planetAuxiliaryLine.addClass('planet-auxiliary-line');
 
         const planetBackgroundPosition = Calc.getPointOnCircle(zodiac.radius.inner, degree, this.PLANET_RADIUS_OFFSET);
         const planetBackgroundRadius = this.getPlanetBackgroundRadius();

@@ -131,16 +131,16 @@ export class AppComponent implements AfterViewInit, OnInit {
         }
       },
       planets: {        // Sets degree of planets.
-        sun: 65,
-        mercury: 12,
-        venus: 151.31,
-        mars: 231,
-        moon: 188,
-        jupiter: 311,
-        saturn: 100,
-        uranus: 199,
-        neptune: 278,
-        pluto: 31
+        sun: null,
+        mercury: null,
+        venus: null,
+        mars: null,
+        moon: null,
+        jupiter: null,
+        saturn: null,
+        uranus: null,
+        neptune: null,
+        pluto: null
       },
       houses: {
         hasHouses: true,
