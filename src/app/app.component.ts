@@ -40,6 +40,8 @@ export class AppComponent implements AfterViewInit, OnInit {
   title = 'ThemeAstral';
   saisieForm: FormGroup;
 
+  swForm = true;
+
   // test = calc(3, 4, 1986, 4, 54);
   // result = getAllPlanets('03.04.1986 04:54:00', -71.13, 42.27, 0);
   // 46.202222 lon 6.14569
@@ -64,7 +66,8 @@ export class AppComponent implements AfterViewInit, OnInit {
   }
 
   onSubmit(): void {
-    console.log(this.saisieForm.value)
+    console.log(this.saisieForm.value);
+    this.swForm = false;
   }
 
   ngOnInit() {
