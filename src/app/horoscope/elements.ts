@@ -1,8 +1,9 @@
+/* a ameliorer avec drawer */
 class Elements {
     constructor() {
         return {
             fire: {
-                fillColor: 'rgba(206, 0, 0, 1.0)'
+                fillColor: 'rgba(206, 0, 0, 1.0)',
             },
             wind: {
                 fillColor: 'rgba(255, 224, 0, 1.0)'
@@ -17,3 +18,4 @@ class Elements {
     }
 }
 export let elements = new Elements();
+

@@ -25,6 +25,8 @@ export class Drawer {
     private snap;
     private drawn;
 
+    private elements;
+
     constructor() {
         const svgImagePath = './assets/resources/svg/planets/';
 
@@ -79,6 +81,21 @@ export class Drawer {
             symbol: '♇',
             imageUrl: svgImagePath + 'pluto.svg',
         }];
+
+        this.elements = {
+            fire: {
+                fillColor: 'rgba(206, 0, 0, 1.0)',
+            },
+            wind: {
+                fillColor: 'rgba(255, 224, 0, 1.0)'
+            },
+            earth: {
+                fillColor: 'rgba(93, 211, 158, 1.0)'
+            },
+            water: {
+                fillColor: 'rgba(58, 162, 255, 1.0)'
+            }
+        };
     }
 
     draw(properties) {
@@ -154,7 +171,7 @@ export class Drawer {
         const circles = {
             outer: this.snap.circle(0, 0, zodiac.radius.outer).attr({ fill: '#FFF', stroke: '#000' }),
             inner: this.snap.circle(0, 0, zodiac.radius.inner).attr({ fill: '#FFF', stroke: '#000' }),
-            innerAuxiliary: this.snap.circle(0, 0, zodiac.radius.innerAuxiliary).attr({ fill: '#FFF', stroke: '#000' }),
+            innerAuxiliary: this.snap.circle(0, 0, zodiac.radius.innerAuxiliary).attr({ fill: '#FFF', stroke: '#000', strokeWidth: 0.2 }),
         };
 
         circles.outer.addClass('zodiac-circle-outer');
@@ -230,22 +247,69 @@ export class Drawer {
             const bottomLeftPoint = Calc.getPointOnCircle(zodiac.radius.outer, degreeNextSign, 0);
             const leftArcDescription = this.describeArc(zodiac.radius.outer, degreeNextSign, degree);
 
-            const zodiacSignBackground = this.snap.path([
-                'M', topLeftPoint.x, topLeftPoint.y,
-                'L', topRightPoint.x, topRightPoint.y,
-                rightArcDescription,
-                'L', bottomLeftPoint.x, bottomLeftPoint.y,
-                'M', topLeftPoint.x, topLeftPoint.y,
-                leftArcDescription,
-                'M', topLeftPoint.x, topLeftPoint.y,
-                'Z'
-            ].join(' '));
+
+
+            let zodiacSignBackground;
+
+            if (signObj.element.toLowerCase() === 'fire') {
+                zodiacSignBackground = this.snap.path([
+                    'M', topLeftPoint.x, topLeftPoint.y,
+                    'L', topRightPoint.x, topRightPoint.y,
+                    rightArcDescription,
+                    'L', bottomLeftPoint.x, bottomLeftPoint.y,
+                    'M', topLeftPoint.x, topLeftPoint.y,
+                    leftArcDescription,
+                    // 'M', topLeftPoint.x, topLeftPoint.y,
+                    // 'Z'
+                ].join(' ')).attr({fill: this.elements.fire.fillColor});
+            }
+
+            if (signObj.element.toLowerCase() === 'wind') {
+                zodiacSignBackground = this.snap.path([
+                    'M', topLeftPoint.x, topLeftPoint.y,
+                    'L', topRightPoint.x, topRightPoint.y,
+                    rightArcDescription,
+                    'L', bottomLeftPoint.x, bottomLeftPoint.y,
+                    'M', topLeftPoint.x, topLeftPoint.y,
+                    leftArcDescription,
+                    // 'M', topLeftPoint.x, topLeftPoint.y,
+                    // 'Z'
+                ].join(' ')).attr({fill: this.elements.wind.fillColor});
+            }
+
+            if (signObj.element.toLowerCase() === 'earth') {
+                zodiacSignBackground = this.snap.path([
+                    'M', topLeftPoint.x, topLeftPoint.y,
+                    'L', topRightPoint.x, topRightPoint.y,
+                    rightArcDescription,
+                    'L', bottomLeftPoint.x, bottomLeftPoint.y,
+                    'M', topLeftPoint.x, topLeftPoint.y,
+                    leftArcDescription,
+                    // 'M', topLeftPoint.x, topLeftPoint.y,
+                    // 'Z'
+                ].join(' ')).attr({fill: this.elements.earth.fillColor});
+            }
+
+            if (signObj.element.toLowerCase() === 'water') {
+                zodiacSignBackground = this.snap.path([
+                    'M', topLeftPoint.x, topLeftPoint.y,
+                    'L', topRightPoint.x, topRightPoint.y,
+                    rightArcDescription,
+                    'L', bottomLeftPoint.x, bottomLeftPoint.y,
+                    'M', topLeftPoint.x, topLeftPoint.y,
+                    leftArcDescription,
+                    // 'M', topLeftPoint.x, topLeftPoint.y,
+                    // 'Z'
+                ].join(' ')).attr({fill: this.elements.water.fillColor});
+            }
 
             const signElementClass = 'zodiac-sign-element-' + signObj.element;
             const signNameClass = 'zodiac-sign-' + signObj.name.toLowerCase();
             zodiacSignBackground.addClass('zodiac-sign');
             zodiacSignBackground.addClass(signElementClass);
             zodiacSignBackground.addClass(signNameClass);
+
+
 
             const zodiacSignPosition = Calc.getPointOnCircle(zodiac.radius.betweenOuterInner, degreeBetweenSigns, 0)
             const zodiacSignImagePositionX = zodiacSignPosition.x - zodiacSignImageWidth / 2;
