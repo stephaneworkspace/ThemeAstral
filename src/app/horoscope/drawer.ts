@@ -1,4 +1,8 @@
-import Snap from 'snapsvg/dist/snap.svg-min';
+// import Snap from 'snapsvg/dist/snap.svg-min';
+
+import 'snapsvg-cjs';
+declare var Snap: any;
+
 import { Calc } from './calc';
 import { zodiac } from './zodiac';
 import { planets } from './planets';

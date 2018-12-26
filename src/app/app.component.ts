@@ -35,7 +35,7 @@ export interface XYDetail {
   styleUrls: ['./app.component.scss']
 })
 
-export class AppComponent implements AfterViewInit {
+export class AppComponent implements AfterViewInit, OnInit {
   title = 'ThemeAstral';
   // test = calc(3, 4, 1986, 4, 54);
   // result = getAllPlanets('03.04.1986 04:54:00', -71.13, 42.27, 0);
@@ -58,7 +58,9 @@ export class AppComponent implements AfterViewInit {
   // @ViewChild('zodiacAries') zodiacAries: ElementRef;
 
   constructor() {
+  }
 
+  ngOnInit() {
     this.properties = {
       zodiac: {
         ascendant: {
