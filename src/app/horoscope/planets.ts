@@ -1,9 +1,9 @@
 class Planets {
-    public planetsArray;
+    private planets;
     constructor() {
-        const svgImagePath = './resources/svg/planets/';
+        const svgImagePath = './assets/resources/svg/planets/';
 
-        this.planetsArray = [{
+        this.planets = [{
             number: 1,
             name: 'Sun',
             symbol: '☉',
@@ -55,6 +55,8 @@ class Planets {
             imageUrl: svgImagePath + 'pluto.svg',
         }];
     }
+    getPlanet() {
+        return this.planets;
+    }
   }
   export let planets = new Planets();
- // export let planetsArray = this.planetsArray;

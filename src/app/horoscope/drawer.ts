@@ -1,16 +1,12 @@
-// import Snap from 'snapsvg/dist/snap.svg-min';
-
 import 'snapsvg-cjs';
 declare var Snap: any;
 
 import { Calc } from './calc';
 import { zodiac } from './zodiac';
-// import { planets, planetsArray } from './planets';
+import { planets } from './planets';
+import { elements } from './elements';
 
 export class Drawer {
-    // probleme avec import
-    private planetsArray;
-
     private selector;
 
     private PLANET_IMAGE_WIDTH;
@@ -24,79 +20,6 @@ export class Drawer {
     private houses;
     private snap;
     private drawn;
-
-    private elements;
-
-    constructor() {
-        const svgImagePath = './assets/resources/svg/planets/';
-
-        this.planetsArray = [{
-            number: 1,
-            name: 'Sun',
-            symbol: '☉',
-            imageUrl: svgImagePath + 'sun.svg',
-        }, {
-            number: 2,
-            name: 'Mercury',
-            symbol: '☿',
-            imageUrl: svgImagePath + 'mercury.svg',
-        }, {
-            number: 3,
-            name: 'Venus',
-            symbol: '♀',
-            imageUrl: svgImagePath + 'venus.svg',
-        }, {
-            number: 4,
-            name: 'Mars',
-            symbol: '♂',
-            imageUrl: svgImagePath + 'mars.svg',
-        }, {
-            number: 5,
-            name: 'Moon',
-            symbol: '☽',
-            imageUrl: svgImagePath + 'moon.svg',
-        }, {
-            number: 6,
-            name: 'Jupiter',
-            symbol: '♃',
-            imageUrl: svgImagePath + 'jupiter.svg',
-        }, {
-            number: 7,
-            name: 'Saturn',
-            symbol: '♄',
-            imageUrl: svgImagePath + 'saturn.svg',
-        }, {
-            number: 8,
-            name: 'Uranus',
-            symbol: '⛢',
-            imageUrl: svgImagePath + 'uranus.svg',
-        }, {
-            number: 9,
-            name: 'Neptune',
-            symbol: '♆',
-            imageUrl: svgImagePath + 'neptune.svg',
-        }, {
-            number: 10,
-            name: 'Pluto',
-            symbol: '♇',
-            imageUrl: svgImagePath + 'pluto.svg',
-        }];
-
-        this.elements = {
-            fire: {
-                fillColor: 'rgba(206, 0, 0, 1.0)',
-            },
-            wind: {
-                fillColor: 'rgba(255, 224, 0, 1.0)'
-            },
-            earth: {
-                fillColor: 'rgba(93, 211, 158, 1.0)'
-            },
-            water: {
-                fillColor: 'rgba(58, 162, 255, 1.0)'
-            }
-        };
-    }
 
     draw(properties) {
         if (properties.hasOwnProperty('selector')) {
@@ -275,7 +198,7 @@ export class Drawer {
                     leftArcDescription,
                     // 'M', topLeftPoint.x, topLeftPoint.y,
                     // 'Z'
-                ].join(' ')).attr({fill: this.elements.fire.fillColor});
+                ].join(' ')).attr({fill: elements.getElements().fire.fillColor});
             }
 
             if (signObj.element.toLowerCase() === 'wind') {
@@ -288,7 +211,7 @@ export class Drawer {
                     leftArcDescription,
                     // 'M', topLeftPoint.x, topLeftPoint.y,
                     // 'Z'
-                ].join(' ')).attr({fill: this.elements.wind.fillColor});
+                ].join(' ')).attr({fill: elements.getElements().wind.fillColor});
             }
 
             if (signObj.element.toLowerCase() === 'earth') {
@@ -301,7 +224,7 @@ export class Drawer {
                     leftArcDescription,
                     // 'M', topLeftPoint.x, topLeftPoint.y,
                     // 'Z'
-                ].join(' ')).attr({fill: this.elements.earth.fillColor});
+                ].join(' ')).attr({fill: elements.getElements().earth.fillColor});
             }
 
             if (signObj.element.toLowerCase() === 'water') {
@@ -314,7 +237,7 @@ export class Drawer {
                     leftArcDescription,
                     // 'M', topLeftPoint.x, topLeftPoint.y,
                     // 'Z'
-                ].join(' ')).attr({fill: this.elements.water.fillColor});
+                ].join(' ')).attr({fill: elements.getElements().water.fillColor});
             }
 
             const signElementClass = 'zodiac-sign-element-' + signObj.element;
@@ -498,61 +421,61 @@ export class Drawer {
     }
 
     drawSun() {
-        return this.drawPlanet(this.planetsArray.find((elem) => {
+        return this.drawPlanet(planets.getPlanet().find((elem) => {
             return elem.name === 'Sun';
         }), this.planets.sun);
     }
 
     drawMercury() {
-        return this.drawPlanet(this.planetsArray.find((elem) => {
+        return this.drawPlanet(planets.getPlanet().find((elem) => {
           return elem.name === 'Mercury';
         }), this.planets.mercury);
     }
 
     drawVenus() {
-        return this.drawPlanet(this.planetsArray.find((elem) => {
+        return this.drawPlanet(planets.getPlanet().find((elem) => {
           return elem.name === 'Venus';
         }), this.planets.venus);
     }
 
     drawMars() {
-        return this.drawPlanet(this.planetsArray.find((elem) => {
+        return this.drawPlanet(planets.getPlanet().find((elem) => {
           return elem.name === 'Mars';
         }), this.planets.mars);
     }
 
     drawMoon() {
-        return this.drawPlanet(this.planetsArray.find((elem) => {
+        return this.drawPlanet(planets.getPlanet().find((elem) => {
           return elem.name === 'Moon';
         }), this.planets.moon);
     }
 
     drawJupiter() {
-        return this.drawPlanet(this.planetsArray.find((elem) => {
+        return this.drawPlanet(planets.getPlanet().find((elem) => {
           return elem.name === 'Jupiter';
         }), this.planets.jupiter);
     }
 
     drawSaturn() {
-        return this.drawPlanet(this.planetsArray.find((elem) => {
+        return this.drawPlanet(planets.getPlanet().find((elem) => {
           return elem.name === 'Saturn';
         }), this.planets.saturn);
     }
 
     drawUranus() {
-        return this.drawPlanet(this.planetsArray.find((elem) => {
+        return this.drawPlanet(planets.getPlanet().find((elem) => {
           return elem.name === 'Uranus';
         }), this.planets.uranus);
     }
 
     drawNeptune() {
-        return this.drawPlanet(this.planetsArray.find((elem) => {
+        return this.drawPlanet(planets.getPlanet().find((elem) => {
           return elem.name === 'Neptune';
         }), this.planets.neptune);
     }
 
     drawPluto() {
-        return this.drawPlanet(this.planetsArray.find((elem) => {
+        return this.drawPlanet(planets.getPlanet().find((elem) => {
           return elem.name === 'Pluto';
         }), this.planets.pluto);
     }

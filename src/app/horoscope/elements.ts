@@ -1,7 +1,7 @@
-/* a ameliorer avec drawer */
 class Elements {
+    private elements;
     constructor() {
-        return {
+        this.elements = {
             fire: {
                 fillColor: 'rgba(206, 0, 0, 1.0)',
             },
@@ -15,6 +15,9 @@ class Elements {
                 fillColor: 'rgba(58, 162, 255, 1.0)'
             }
         };
+    }
+    getElements() {
+        return this.elements;
     }
 }
 export let elements = new Elements();
