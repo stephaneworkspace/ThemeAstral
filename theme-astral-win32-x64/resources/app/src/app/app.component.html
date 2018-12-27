@@ -1,4 +1,76 @@
-<main class="content">   
+<main class="content">
+    <div class="container">
+        <div class="row">
+            <div class="col">        
+    <!--<h1><div class="text-center">Saisie</div></h1>-->
+                <div style="text-align:center; padding-top: 35px">
+                    <svg id="horoscope" class="canvas" width="500" height="500" style="align-content: center"></svg>
+                </div>
+            </div>
+        </div>
+        <!--<br />
+        <canvas #myCanvas class="canvas" width="450" height="450">   
+        </canvas>-->
+    </div>
+    <br />
+    <!-- a faire validator https://angular.io/guide/reactive-forms dans ts -->
+    <form [formGroup]="saisieForm" (ngSubmit)="onSubmit()" *ngIf="swForm == true">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="Nom">Nom</label>
+                        <input class="form-control" id="inputNom" formControlName="Nom" aria-describedby="nomHelp" placeholder="Entrez votre nom">
+                        <!--<small class="form-text text-muted" id="nomHelp">Votre nom</small>-->
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="Prenom">Prénom</label>
+                        <input class="form-control" id="inputPrenom" formControlName="Prenom" aria-describedby="PrenomHelp" placeholder="Entrez votre prénom">
+                        <!--<small class="form-text text-muted" id="prenomHelp">Votre prénom</small>-->
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="Jour">Jour de naissance</label>
+                        <input class="form-control" id="inputJour" formControlName="Jour">
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="Mois">Mois de naissance</label>
+                        <input class="form-control" id="inputMois" formControlName="Mois">
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="Annee">Année de naissance</label>
+                        <input class="form-control" id="inputAnnee" formControlName="Annee">
+                    </div>
+                </div>                
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="Heure">Heure naissance</label>
+                        <input class="form-control" id="inputHeure" formControlName="Heure">
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="Minute">Minute de naissance</label>
+                        <input class="form-control" id="inputMinute" formControlName="Minute">
+                    </div>
+                </div>              
+            </div>        
+        </div>
+        <button type="submit" class="btn btn-primary">Afficher thème astral</button>
+    </form>
+
+    <!--   
     <h1>Electron Timer</h1>
 
     <div class="progress-wrapper" *ngIf="maxVal">
@@ -24,14 +96,14 @@
     <div class="controls-wrapper">
  
         <label>Seconds</label>
-        <input class="input" placeholder="number of seconds" type="text" 
+        <input class="input form-control" placeholder="number of seconds" type="text" 
               [(ngModel)]="max"
               (keydown)="reset()">
 
             
         <button *ngIf="currentVal <= 0" (click)="start()">Start</button>
         <button *ngIf="!isFinished" (click)="finish()">Finish</button>
-    </div>
+    </div>-->
 </main>
 
 <router-outlet></router-outlet>

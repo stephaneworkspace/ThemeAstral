@@ -1,50 +1,288 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, Input, OnDestroy } from '@angular/core';
+import { FormGroup, FormControl } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/interval';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/takeWhile';
 import 'rxjs/add/operator/do';
+import { fromEvent, Subscription, from } from 'rxjs';
+import { pairwise, switchMap, takeUntil } from 'rxjs/operators';
+import { getAllPlanets } from 'ephemeris_npm';
+
+import { Horoscope } from './horoscope/main';
+
+/*
+export interface XY {
+  // 216 est le cercle exterieur, celui de 0.5
+  xy216: XYDetail;
+  // 180 est le cercle intérieur
+  xy180: XYDetail;
+  itemNumber: number;
+}
+
+export interface XY210 {
+  // 210 est entre les 2 cercles plus proche de celui de 0.5
+  xy210: XYDetail;
+  itemNumber: number;
+}
+
+export interface XYDetail {
+  x: number;
+  y: number;
+}*/
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
-  max = 1;
-  current = 0;
+
+export class AppComponent implements AfterViewInit, OnInit {
   title = 'ThemeAstral';
+  saisieForm: FormGroup;
 
-  /// Start the timer
-  start() {
-    const interval = Observable.interval(100);
-        interval
-          .takeWhile(_ => !this.isFinished )
-          .do(i => this.current += 0.1)
-          .subscribe();
+  swForm = true;
+
+  // test = calc(3, 4, 1986, 4, 54);
+  // result = getAllPlanets('03.04.1986 04:54:00', -71.13, 42.27, 0);
+  // 46.202222 lon 6.14569
+  // test = getAllPlanets(3, 4, 1986, 4, 54, -71.13, 42.27, 0);
+
+  // test: any = getAllPlanets('03.04.1986 04:54:00', -71.13, 42.27, 0);
+
+  private _size = 450;
+  private _zodiac = {
+    ascendant: {
+      sign: 1,
+      degree: 1.15
+    }
+  };
+  /*
+  private _arrayZodiac12: Array<XY>;
+  private _arrayZodiac: Array<XY210>;*/
+  private properties;
+
+  @ViewChild('myCanvas') myCanvas: ElementRef;
+  // @ViewChild('zodiacAries') zodiacAries: ElementRef;
+
+  constructor() {
   }
 
-   /// finish timer
-  finish() {
-    this.current = this.max;
+  onSubmit(): void {
+    console.log(this.saisieForm.value);
+    this.swForm = false;
+    const ephem = getAllPlanets('03.04.1986 04:54:00', -71.13, 42.27, 0);
+    console.log(ephem);
+
+
+
+    this.properties = {
+      zodiac: {
+        ascendant: {
+          sign: 1,      // Sets ascendant by sign. See src/zodiac.js.
+          degree: 1.15    // Sets degree offset for ascendant sign.
+        }
+      },
+      planets: {        // Sets degree of planets.
+        sun: ephem.observed.sun.apparentLongitudeDd,
+        mercury: ephem.observed.mercury.apparentLongitudeDd,
+        venus: ephem.observed.venus.apparentLongitudeDd,
+        mars: ephem.observed.mars.apparentLongitudeDd,
+        moon: ephem.observed.moon.apparentLongitudeDd,
+        jupiter: ephem.observed.jupiter.apparentLongitudeDd,
+        saturn: ephem.observed.saturn.apparentLongitudeDd,
+        uranus: ephem.observed.uranus.apparentLongitudeDd,
+        neptune: ephem.observed.neptune.apparentLongitudeDd,
+        pluto: ephem.observed.pluto.apparentLongitudeDd,
+      },
+      houses: {
+        hasHouses: true,
+        axes: {
+          axis2to8: 27,   // Sets degree of axis.
+          axis3to9: 56,
+          axis4to10: 81,
+          axis5to11: 114,
+          axis6to12: 156
+        }
+      }
+    };
+
+    const h = new Horoscope(this.properties);
+    const drawn = h.draw('#horoscope');
+    console.log('Hurray! You have drawn your horoscope.', drawn);
+
   }
 
-  /// reset timer
-  reset() {
-    this.current = 0;
+  ngOnInit() {
+    this.saisieForm = new FormGroup({
+      Nom: new FormControl(),
+      Prenom: new FormControl(),
+      Jour: new FormControl(),
+      Mois: new FormControl(),
+      Annee: new FormControl(),
+      Heure: new FormControl(),
+      Minute: new FormControl()
+    });
+    this.properties = {
+      zodiac: {
+        ascendant: {
+          sign: 1,      // Sets ascendant by sign. See src/zodiac.js.
+          degree: 1.15    // Sets degree offset for ascendant sign.
+        }
+      },
+      planets: {        // Sets degree of planets.
+        sun: null,
+        mercury: null,
+        venus: null,
+        mars: null,
+        moon: null,
+        jupiter: null,
+        saturn: null,
+        uranus: null,
+        neptune: null,
+        pluto: null
+      },
+      houses: {
+        hasHouses: true,
+        axes: {
+          axis2to8: 27,   // Sets degree of axis.
+          axis3to9: 56,
+          axis4to10: 81,
+          axis5to11: 114,
+          axis6to12: 156
+        }
+      }
+    };
+
+    const h = new Horoscope(this.properties);
+    const drawn = h.draw('#horoscope');
+    console.log('Hurray! You have drawn your horoscope.', drawn);
   }
 
-  /// Getters to prevent NaN errors
+  ngAfterViewInit() {
+/*
+    let self = this;
+    this._arrayZodiac12 = [];
+    this._arrayZodiac = [];
+    // wait for the view to init before using the element
+    const context: CanvasRenderingContext2D = this.myCanvas.nativeElement.getContext('2d');
+    // happy drawing from here on
+    context.fillStyle = 'white';
+    context.fillRect(0, 0, 450, 450);
 
-  get maxVal() {
-    return isNaN(this.max) || this.max < 0.1 ? 0.1 : this.max;
-  }
+    // Cercle qui touche presque la bordure * 0.48
+    context.beginPath();
+    context.arc(this._size * 0.5, this._size * 0.5, this._size * 0.48, 0, Math.PI * 2, false); // Outer circle
+    context.strokeStyle = 'black';
+    context.stroke();
+    context.closePath();
 
-  get currentVal() {
-    return isNaN(this.current) || this.current < 0 ? 0 : this.current;
-  }
+    // Cercle à 0.4
+    context.beginPath();
+    context.arc(this._size * 0.5, this._size * 0.5, this._size * 0.4, 0, Math.PI * 2, false); // Outer circle
+    context.strokeStyle = 'black';
+    context.stroke();
+    context.closePath();
 
-  get isFinished() {
-    return this.currentVal >= this.maxVal;
+    // 12 signes astrologique décalage par rapport au zodiaque
+    context.beginPath();
+    // trait par degré
+    let step = 2 * Math.PI / 12;
+    let h = this._size * 0.5;
+    let k = this._size * 0.5;
+    let r = 216; // taille du trait
+    let x = 0;
+    let y = 0;
+    let itemNumber = 4;
+
+    for (let theta = 0 - this._zodiac.ascendant.degree;  theta < (2 * Math.PI) - this._zodiac.ascendant.degree;  theta += step) {
+      itemNumber++;
+      if (itemNumber > 12) {
+        itemNumber = 1;
+      }
+      x = h + r * Math.cos(theta);
+      y = k - r * Math.sin(theta);
+      context.moveTo(this._size * 0.5, this._size * 0.5);
+      context.lineTo(x, y);
+
+      this._arrayZodiac12.push({
+        xy216: {
+          x: x,
+          y: y,
+        },
+        xy180: {
+          x: h + 180 * Math.cos(theta),
+          y: h - 180 * Math.sin(theta),
+        },
+        itemNumber: itemNumber
+      });
+
+      // context.drawImage(this.signeBelier, this._size * 0.5, this._size * 0.5);
+    }
+    context.strokeStyle = 'black';
+    context.stroke();
+    context.closePath();
+
+
+    // 12 signes astrologique au milieu donc division par 24
+    // avec prise en charge uniquement des paires
+
+    step = 2 * Math.PI / 24;
+    h = this._size * 0.5;
+    k = this._size * 0.5;
+    r = 210; // taille du trait
+    x = 0;
+    y = 0;
+    let itemNumber24 = 8;
+    let itemNumberDivide = 0;
+
+    for (let theta = 0 - this._zodiac.ascendant.degree;  theta < (2 * Math.PI) - this._zodiac.ascendant.degree;  theta += step) {
+    itemNumber24++;
+      if (itemNumber24 > 24) {
+        itemNumber24 = 1;
+      }
+      x = h + r * Math.cos(theta);
+      y = k - r * Math.sin(theta);
+      context.moveTo(this._size * 0.5, this._size * 0.5);
+      context.lineTo(x, y);
+
+      if (itemNumber24 % 2 === 0) {
+        itemNumberDivide = itemNumber24 / 2;
+        this._arrayZodiac.push({
+          xy210: {
+            x: x,
+            y: y,
+          },
+          itemNumber: itemNumberDivide
+        });
+      }
+
+    }
+
+
+
+    // 360 Traits jusqu'au centre
+    context.beginPath();
+    // trait par degré
+    step = 2 * Math.PI / 360;
+    h = this._size * 0.5;
+    k = this._size * 0.5;
+    r = 180; // taille du trait
+    x = 0;
+    y = 0;
+    for (let theta = 0;  theta < 2 * Math.PI;  theta += step) {
+      if (theta === 0) {
+        // eviter de reécrire dessus
+      } else {
+        x = h + r * Math.cos(theta);
+        y = k - r * Math.sin(theta);
+        context.moveTo(this._size * 0.5, this._size * 0.5);
+        context.lineTo(x, y);
+      }
+    }
+    context.strokeStyle = 'black';
+    context.stroke();
+    context.closePath();
+*/
   }
 }

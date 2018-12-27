@@ -4,8 +4,10 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-import { FormsModule } from '@angular/forms'; // <-- here
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'; // <-- here
 import { RoundProgressModule } from 'angular-svg-round-progressbar'; //
+
+
 
 @NgModule({
   declarations: [
@@ -15,6 +17,7 @@ import { RoundProgressModule } from 'angular-svg-round-progressbar'; //
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    ReactiveFormsModule,
     RoundProgressModule
   ],
   providers: [],
