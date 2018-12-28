@@ -148,6 +148,29 @@ export class Drawer {
                     strokeWidth: 0.3
                 }
             );
+            console.log('zodiac.radius.inner: ' + zodiac.radius.inner);
+            console.log('sun: ' + this.planets.sun + ' ' + linePoint1.x + ', ' + linePoint1.y);
+            console.log('saturn: ' + this.planets.saturn + ' ' + linePoint2.x + ', ' + linePoint2.y);
+            // TRACER UNE LIGNE AU CENTRE
+            this.snap.line(0, 0, zodiac.radius.inner, zodiac.radius.inner).attr(
+                {
+                    fill: '#FFF',
+                    stroke: '#000',
+                    strokeWidth: 0.3
+                }
+            );
+
+            // calcul de la distance entre sun et saturn
+            const a = linePoint1.x - linePoint2.x;
+            const b = linePoint1.y - linePoint2.y;
+            // http://www.alloprof.qc.ca/BV/pages/m1311.aspx
+            const c = Math.sqrt( Math.pow((a), 2) + Math.pow((b), 2) );
+            // Mesure de l'angle entre sun et saturn
+            // https://www.youtube.com/watch?v=OuYuf6IBkL0
+            // circonférance : https://www.youtube.com/watch?v=hEppSPkvu8s
+            const circ = 2 * Math.PI * zodiac.radius.inner;
+            const d = (c * 360) / circ;
+            console.log('c: ' + c + ' d: ' + d);
         }
 
         return degrees;
