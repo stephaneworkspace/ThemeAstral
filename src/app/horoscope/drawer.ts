@@ -60,6 +60,54 @@ export class Drawer {
                 axes: this.drawHousesAxes(),
                 meta: this.houses
             },
+            aspects: [
+                this.drawAspect(this.planets.sun, this.planets.mercury, 'sun', 'mercury'),
+                this.drawAspect(this.planets.sun, this.planets.venus, 'sun', 'venus'),
+                this.drawAspect(this.planets.sun, this.planets.mars, 'sun', 'mars'),
+                this.drawAspect(this.planets.sun, this.planets.moon, 'sun', 'moon'),
+                this.drawAspect(this.planets.sun, this.planets.jupiter, 'sun', 'jupiter'),
+                this.drawAspect(this.planets.sun, this.planets.saturn, 'sun', 'saturn'),
+                this.drawAspect(this.planets.sun, this.planets.uranus, 'sun', 'uranus'),
+                this.drawAspect(this.planets.sun, this.planets.neptune, 'sun', 'neptune'),
+                this.drawAspect(this.planets.sun, this.planets.pluto, 'sun', 'pluto'),
+
+                this.drawAspect(this.planets.mercury, this.planets.venus, 'mercury', 'venus'),
+                this.drawAspect(this.planets.mercury, this.planets.mars, 'mercury', 'mars'),
+                this.drawAspect(this.planets.mercury, this.planets.moon, 'mercury', 'moon'),
+                this.drawAspect(this.planets.mercury, this.planets.jupiter, 'mercury', 'jupiter'),
+                this.drawAspect(this.planets.mercury, this.planets.saturn, 'mercury', 'saturn'),
+                this.drawAspect(this.planets.mercury, this.planets.uranus, 'mercury', 'uranus'),
+                this.drawAspect(this.planets.mercury, this.planets.neptune, 'mercury', 'neptune'),
+                this.drawAspect(this.planets.mercury, this.planets.pluto, 'mercury', 'pluto'),
+
+                this.drawAspect(this.planets.venus, this.planets.mars, 'venus', 'mars'),
+                this.drawAspect(this.planets.venus, this.planets.moon, 'venus', 'moon'),
+                this.drawAspect(this.planets.venus, this.planets.jupiter, 'venus', 'jupiter'),
+                this.drawAspect(this.planets.venus, this.planets.saturn, 'venus', 'saturn'),
+                this.drawAspect(this.planets.venus, this.planets.uranus, 'venus', 'uranus'),
+                this.drawAspect(this.planets.venus, this.planets.neptune, 'venus', 'neptune'),
+                this.drawAspect(this.planets.venus, this.planets.pluto, 'venus', 'pluto'),
+
+                this.drawAspect(this.planets.moon, this.planets.jupiter, 'moon', 'jupiter'),
+                this.drawAspect(this.planets.moon, this.planets.saturn, 'moon', 'saturn'),
+                this.drawAspect(this.planets.moon, this.planets.uranus, 'moon', 'uranus'),
+                this.drawAspect(this.planets.moon, this.planets.neptune, 'moon', 'neptune'),
+                this.drawAspect(this.planets.moon, this.planets.pluto, 'moon', 'pluto'),
+
+                this.drawAspect(this.planets.jupiter, this.planets.saturn, 'jupiter', 'saturn'),
+                this.drawAspect(this.planets.jupiter, this.planets.uranus, 'jupiter', 'uranus'),
+                this.drawAspect(this.planets.jupiter, this.planets.neptune, 'jupiter', 'neptune'),
+                this.drawAspect(this.planets.jupiter, this.planets.pluto, 'jupiter', 'pluto'),
+
+                this.drawAspect(this.planets.saturn, this.planets.uranus, 'saturn', 'uranus'),
+                this.drawAspect(this.planets.saturn, this.planets.neptune, 'saturn', 'neptune'),
+                this.drawAspect(this.planets.saturn, this.planets.pluto, 'saturn', 'pluto'),
+
+                this.drawAspect(this.planets.uranus, this.planets.neptune, 'uranus', 'neptune'),
+                this.drawAspect(this.planets.uranus, this.planets.pluto, 'uranus', 'pluto'),
+
+                this.drawAspect(this.planets.neptune, this.planets.pluto, 'neptune', 'pluto'),
+            ],
             planets: [
                 this.drawSun(),
                 this.drawMercury(),
@@ -71,7 +119,7 @@ export class Drawer {
                 this.drawUranus(),
                 this.drawNeptune(),
                 this.drawPluto()
-            ]
+            ],
         };
 
         this.drawn.planets = this.correctCollidingPlanets(this.drawn.planets);
@@ -137,42 +185,6 @@ export class Drawer {
             });
         }
 
-        // Liaison Soleil à Saturne, bidouille
-        if (this.planets.sun != null && this.planets.saturn != null) {
-            const linePoint1 = Calc.getPointOnCircle(zodiac.radius.inner, this.planets.sun, 0);
-            const linePoint2 = Calc.getPointOnCircle(zodiac.radius.inner, this.planets.saturn, 0);
-            const planetAuxiliaryLine = this.snap.line(linePoint1.x, linePoint1.y, linePoint2.x, linePoint2.y).attr(
-                {
-                    fill: '#FFF',
-                    stroke: '#000',
-                    strokeWidth: 0.3
-                }
-            );
-            console.log('zodiac.radius.inner: ' + zodiac.radius.inner);
-            console.log('sun: ' + this.planets.sun + ' ' + linePoint1.x + ', ' + linePoint1.y);
-            console.log('saturn: ' + this.planets.saturn + ' ' + linePoint2.x + ', ' + linePoint2.y);
-            // TRACER UNE LIGNE AU CENTRE
-            this.snap.line(0, 0, zodiac.radius.inner, zodiac.radius.inner).attr(
-                {
-                    fill: '#FFF',
-                    stroke: '#000',
-                    strokeWidth: 0.3
-                }
-            );
-
-            // calcul de la distance entre sun et saturn
-            const a = linePoint1.x - linePoint2.x;
-            const b = linePoint1.y - linePoint2.y;
-            // http://www.alloprof.qc.ca/BV/pages/m1311.aspx
-            const c = Math.sqrt( Math.pow((a), 2) + Math.pow((b), 2) );
-            // Mesure de l'angle entre sun et saturn
-            // https://www.youtube.com/watch?v=OuYuf6IBkL0
-            // circonférance : https://www.youtube.com/watch?v=hEppSPkvu8s
-            const circ = 2 * Math.PI * zodiac.radius.inner;
-            const d = (c * 360) / circ;
-            console.log('c: ' + c + ' d: ' + d);
-        }
-
         return degrees;
     }
 
@@ -206,8 +218,6 @@ export class Drawer {
             const rightArcDescription = this.describeArc(zodiac.radius.innerAuxiliary, degreeNextSign, degree);
             const bottomLeftPoint = Calc.getPointOnCircle(zodiac.radius.outer, degreeNextSign, 0);
             const leftArcDescription = this.describeArc(zodiac.radius.outer, degreeNextSign, degree);
-
-
 
             let zodiacSignBackground;
 
@@ -560,6 +570,95 @@ export class Drawer {
         }
 
         return (lowerBound <= nextPlanetDegree && nextPlanetDegree <= upperBound);
+    }
+
+    drawAspect(planetA, planetB, planetNameA, planetNameB) {
+        let degre = 0;
+        let aspect = '';
+        // Liaison Soleil à Lune, bidouille
+        if (planetA != null && planetB != null) {
+            const linePoint1 = Calc.getPointOnCircle(zodiac.radius.inner, planetA, 0);
+            const linePoint2 = Calc.getPointOnCircle(zodiac.radius.inner, planetB, 0);
+            // console.log('zodiac.radius.inner: ' + zodiac.radius.inner);
+            // console.log('sun: ' + this.planets.sun + ' ' + linePoint1.x + ', ' + linePoint1.y);
+            // console.log('saturn: ' + this.planets.moon + ' ' + linePoint2.x + ', ' + linePoint2.y);
+
+            // calcul de la distance entre sun et saturn
+            const a = linePoint1.x - linePoint2.x;
+            const b = linePoint1.y - linePoint2.y;
+            // http://www.alloprof.qc.ca/BV/pages/m1311.aspx
+            const c = Math.sqrt( Math.pow((a), 2) + Math.pow((b), 2) );
+            // Mesure de l'angle entre sun et saturn
+            // https://www.youtube.com/watch?v=OuYuf6IBkL0
+            // circonférance : https://www.youtube.com/watch?v=hEppSPkvu8s
+            const circ = 2 * Math.PI * zodiac.radius.inner;
+            degre = (c * 360) / circ;
+            // console.log('degre: ' + degre);
+            if ((degre >= 350 && degre <= 360) || (degre >= 0 && degre <= 10)) {
+                aspect = 'conjonction';
+            }
+            if (degre >= 180 - 8 && degre <= 180 + 8) {
+                aspect = 'opposition';
+            }
+            if (degre >= 120 - 7 && degre <= 120 + 7) {
+                aspect = 'trigone';
+            }
+            if (degre >= 90 - 7 && degre <= 90 + 7) {
+                aspect = 'quadrature';
+            }
+            if (degre >= 60 - 5 && degre <= 60 + 7) {
+                aspect = 'sextile';
+            }
+            if (degre >= 150 - 2 && degre <= 150 + 2) {
+                aspect = 'quinconce';
+            }
+            if (degre >= 135 - 1 && degre <= 135 + 1) {
+                aspect = 'sesqui-carré';
+            }
+            if (degre >= 45 - 1 && degre <= 45 + 1) {
+                aspect = 'demi-carré';
+            }
+            if (degre >= 30 - 1 && degre <= 30 + 1) {
+                aspect = 'demi-sextile';
+            }
+            let planetAuxiliaryLine;
+            if (aspect !== '') {
+                switch (aspect) {
+                    case 'quadrature' :
+                        planetAuxiliaryLine = this.snap.line(linePoint1.x, linePoint1.y, linePoint2.x, linePoint2.y).attr(
+                            {
+                                fill: '#FFF',
+                                stroke: '#000',
+                                strokeWidth: 0.3,
+                                'stroke-dasharray': '8px, 4px'
+                            }
+                        );
+                        break;
+                    default:
+                        planetAuxiliaryLine = this.snap.line(linePoint1.x, linePoint1.y, linePoint2.x, linePoint2.y).attr(
+                            {
+                                fill: '#FFF',
+                                stroke: '#000',
+                                strokeWidth: 0.3
+                            }
+                        );
+                        break;
+                }
+            }
+        }
+
+        return {
+            planetA: {
+                nom: planetNameA,
+                pos: planetA
+            },
+            planetB: {
+                nom: planetNameB,
+                pos: planetB
+            },
+            radius: degre,
+            aspect: aspect
+        };
     }
 }
 export let drawer = new Drawer();
