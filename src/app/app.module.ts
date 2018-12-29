@@ -5,13 +5,15 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'; // <-- here
-import { RoundProgressModule } from 'angular-svg-round-progressbar'; //
+import { RoundProgressModule } from 'angular-svg-round-progressbar';
+import { CircleCanvasComponent } from './bidouille/circle-canvas/circle-canvas.component'; //
 
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    CircleCanvasComponent
   ],
   imports: [
     BrowserModule,
