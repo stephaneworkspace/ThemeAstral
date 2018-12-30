@@ -42,7 +42,7 @@ export class AppComponent implements AfterViewInit, OnInit {
   private _arrayZodiac: Array<XY210>;*/
   private properties;
 
-  public aspects;
+  private aspects;
 
   @ViewChild('myCanvas') myCanvas: ElementRef;
   // @ViewChild('zodiacAries') zodiacAries: ElementRef;
@@ -96,45 +96,45 @@ export class AppComponent implements AfterViewInit, OnInit {
     this.aspects = {
       sun: {
         position: ephem.observed.sun.apparentLongitudeDms30,
-        aspects: []
+        aspects: [] = []
       },
       moon: {
         position: ephem.observed.moon.apparentLongitudeDms30,
-        aspects: []
+        aspects: [] = []
       },
       mercury: {
         position: ephem.observed.mercury.apparentLongitudeDms30,
-        aspects: []
+        aspects: [] = []
       },
       venus: {
         position: ephem.observed.venus.apparentLongitudeDms30,
-        aspects: []
+        aspects: [] = []
       },
       mars: {
         position: ephem.observed.mars.apparentLongitudeDms30,
-        aspects: []
+        aspects: [] = []
       },
       jupiter: {
         position: ephem.observed.jupiter.apparentLongitudeDms30,
-        aspects: []
+        aspects: [] = []
       },
       saturn: {
         position: ephem.observed.saturn.apparentLongitudeDms30,
-        aspects: []
+        aspects: [] = []
       },
       uranus: {
         position: ephem.observed.uranus.apparentLongitudeDms30,
-        aspects: []
+        aspects: [] = []
       },
       neptune: {
         position: ephem.observed.neptune.apparentLongitudeDms30,
-        aspects: []
+        aspects: [] = []
       },
       pluto: {
         position: ephem.observed.pluto.apparentLongitudeDms30,
-        aspects: []
+        aspects: [] = []
       },
-    }
+    };
 
     // sun
     drawn.aspects.forEach(element => {
@@ -149,7 +149,7 @@ export class AppComponent implements AfterViewInit, OnInit {
     // moon
     drawn.aspects.forEach(element => {
       if (element.planetA.nom === 'moon') {
-        this.aspects.sun.aspects.push({
+        this.aspects.moon.aspects.push({
           planet: element.planetB.nom,
           type: element.aspect,
           degree: element.radius
@@ -159,7 +159,7 @@ export class AppComponent implements AfterViewInit, OnInit {
     // mercury
     drawn.aspects.forEach(element => {
       if (element.planetA.nom === 'mercury') {
-        this.aspects.sun.aspects.push({
+        this.aspects.mercury.aspects.push({
           planet: element.planetB.nom,
           type: element.aspect,
           degree: element.radius
@@ -169,7 +169,7 @@ export class AppComponent implements AfterViewInit, OnInit {
     // venus
     drawn.aspects.forEach(element => {
       if (element.planetA.nom === 'venus') {
-        this.aspects.sun.aspects.push({
+        this.aspects.venus.aspects.push({
           planet: element.planetB.nom,
           type: element.aspect,
           degree: element.radius
@@ -179,7 +179,7 @@ export class AppComponent implements AfterViewInit, OnInit {
     // jupiter
     drawn.aspects.forEach(element => {
       if (element.planetA.nom === 'jupiter') {
-        this.aspects.sun.aspects.push({
+        this.aspects.jupiter.aspects.push({
           planet: element.planetB.nom,
           type: element.aspect,
           degree: element.radius
@@ -189,7 +189,7 @@ export class AppComponent implements AfterViewInit, OnInit {
     // saturn
     drawn.aspects.forEach(element => {
       if (element.planetA.nom === 'saturn') {
-        this.aspects.sun.aspects.push({
+        this.aspects.saturn.aspects.push({
           planet: element.planetB.nom,
           type: element.aspect,
           degree: element.radius
@@ -199,7 +199,7 @@ export class AppComponent implements AfterViewInit, OnInit {
     // uranus
     drawn.aspects.forEach(element => {
       if (element.planetA.nom === 'uranus') {
-        this.aspects.sun.aspects.push({
+        this.aspects.uranus.aspects.push({
           planet: element.planetB.nom,
           type: element.aspect,
           degree: element.radius
@@ -209,7 +209,7 @@ export class AppComponent implements AfterViewInit, OnInit {
     // neptune
     drawn.aspects.forEach(element => {
       if (element.planetA.nom === 'neptune') {
-        this.aspects.sun.aspects.push({
+        this.aspects.neptune.aspects.push({
           planet: element.planetB.nom,
           type: element.aspect,
           degree: element.radius
@@ -219,7 +219,7 @@ export class AppComponent implements AfterViewInit, OnInit {
     // pluto
     drawn.aspects.forEach(element => {
       if (element.planetA.nom === 'pluto') {
-        this.aspects.sun.aspects.push({
+        this.aspects.pluto.aspects.push({
           planet: element.planetB.nom,
           type: element.aspect,
           degree: element.radius
@@ -278,5 +278,64 @@ export class AppComponent implements AfterViewInit, OnInit {
 
   ngAfterViewInit() {
 
+  }
+
+  getAspect(planet) {
+    switch (planet) {
+      case 'sun':
+        return {
+          position: this.aspects.sun.position,
+          aspects: this.aspects.sun.aspects.slice(0)
+        };
+        break;
+      case 'moon':
+        return {
+          position: this.aspects.moon.position,
+          aspects: this.aspects.moon.aspects.slice(0)
+        };
+        break;
+      case 'mercury':
+        return {
+          position: this.aspects.mercury.position,
+          aspects: this.aspects.mercury.aspects.slice(0)
+        };
+        break;
+      case 'venus':
+        return {
+          position: this.aspects.venus.position,
+          aspects: this.aspects.venus.aspects.slice(0)
+        };
+        break;
+      case 'jupiter':
+        return {
+          position: this.aspects.jupiter.position,
+          aspects: this.aspects.jupiter.aspects.slice(0)
+        };
+        break;
+      case 'saturn':
+        return {
+          position: this.aspects.saturn.position,
+          aspects: this.aspects.saturn.aspects.slice(0)
+        };
+        break;
+      case 'uranus':
+        return {
+          position: this.aspects.uranus.position,
+          aspects: this.aspects.uranus.aspects.slice(0)
+        };
+        break;
+      case 'neptune':
+        return {
+          position: this.aspects.neptune.position,
+          aspects: this.aspects.neptune.aspects.slice(0)
+        };
+        break;
+      case 'pluto':
+        return {
+          position: this.aspects.pluto.position,
+          aspects: this.aspects.pluto.aspects.slice(0)
+        };
+        break;
+    }
   }
 }

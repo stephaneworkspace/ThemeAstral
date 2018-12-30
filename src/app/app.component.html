@@ -7,12 +7,69 @@
                     <svg id="horoscope" class="canvas" width="500" height="500" style="align-content: center"></svg>
                 </div>
                 <br />
-                <!--
-                <ul>
-                    <li *ngFor="let item of aspects.sun.aspects; let i = index">
-                        sun {{ i }} {{ item.position }}
+                <ul *ngIf="swForm != true">
+                    Sun {{ getAspect('sun').position }}
+                    <li *ngFor="let item of getAspect('sun').aspects; let i = index">
+                        <div *ngIf="item.type === ''">{{ item.planet }} - {{ item.degree}} °</div>
+                        <div *ngIf="item.type !== ''">{{ item.planet }} - {{ item.type }} - {{ item.degree}} °</div>
                     </li>
-                </ul>  -->              
+                </ul>
+                <ul *ngIf="swForm != true">
+                    Moon {{ getAspect('moon').position }}
+                    <li *ngFor="let item of getAspect('moon').aspects; let i = index">
+                        <div *ngIf="item.type === ''">{{ item.planet }} - {{ item.degree}} °</div>
+                        <div *ngIf="item.type !== ''">{{ item.planet }} - {{ item.type }} - {{ item.degree}} °</div>
+                    </li>
+                </ul>
+                <ul *ngIf="swForm != true">
+                    Mercury {{ getAspect('mercury').position }}
+                    <li *ngFor="let item of getAspect('mercury').aspects; let i = index">
+                        <div *ngIf="item.type === ''">{{ item.planet }} - {{ item.degree}} °</div>
+                        <div *ngIf="item.type !== ''">{{ item.planet }} - {{ item.type }} - {{ item.degree}} °</div>
+                    </li>
+                </ul> 
+                <ul *ngIf="swForm != true">
+                    Venus {{ getAspect('venus').position }}
+                    <li *ngFor="let item of getAspect('venus').aspects; let i = index">
+                        <div *ngIf="item.type === ''">{{ item.planet }} - {{ item.degree}} °</div>
+                        <div *ngIf="item.type !== ''">{{ item.planet }} - {{ item.type }} - {{ item.degree}} °</div>
+                    </li>
+                </ul> 
+                <ul *ngIf="swForm != true">
+                    Jupiter {{ getAspect('jupiter').position }}
+                    <li *ngFor="let item of getAspect('jupiter').aspects; let i = index">
+                        <div *ngIf="item.type === ''">{{ item.planet }} - {{ item.degree}} °</div>
+                        <div *ngIf="item.type !== ''">{{ item.planet }} - {{ item.type }} - {{ item.degree}} °</div>
+                    </li>
+                </ul>  
+                <ul *ngIf="swForm != true">
+                    Saturn {{ getAspect('saturn').position }}
+                    <li *ngFor="let item of getAspect('saturn').aspects; let i = index">
+                        <div *ngIf="item.type === ''">{{ item.planet }} - {{ item.degree}} °</div>
+                        <div *ngIf="item.type !== ''">{{ item.planet }} - {{ item.type }} - {{ item.degree}} °</div>
+                    </li>
+                </ul> 
+                <ul *ngIf="swForm != true">
+                    Uranus {{ getAspect('uranus').position }}
+                    <li *ngFor="let item of getAspect('uranus').aspects; let i = index">
+                        <div *ngIf="item.type === ''">{{ item.planet }} - {{ item.degree}} °</div>
+                        <div *ngIf="item.type !== ''">{{ item.planet }} - {{ item.type }} - {{ item.degree}} °</div>
+                    </li>
+                </ul>    
+                <ul *ngIf="swForm != true">
+                    Neptune {{ getAspect('neptune').position }}
+                    <li *ngFor="let item of getAspect('neptune').aspects; let i = index">
+                        <div *ngIf="item.type === ''">{{ item.planet }} - {{ item.degree}} °</div>
+                        <div *ngIf="item.type !== ''">{{ item.planet }} - {{ item.type }} - {{ item.degree}} °</div>
+                    </li>
+                </ul>
+                <ul *ngIf="swForm != true">
+                    Pluto {{ getAspect('pluto').position }}
+                    <li *ngFor="let item of getAspect('pluto').aspects; let i = index">
+                        <div *ngIf="item.type === ''">{{ item.planet }} - {{ item.degree}} °</div>
+                        <div *ngIf="item.type !== ''">{{ item.planet }} - {{ item.type }} - {{ item.degree}} °</div>
+                    </li>
+                </ul>                                                
             </div>
         </div>
     </div>
