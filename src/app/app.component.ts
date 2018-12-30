@@ -98,10 +98,6 @@ export class AppComponent implements AfterViewInit, OnInit {
         position: ephem.observed.sun.apparentLongitudeDms30,
         aspects: [] = []
       },
-      moon: {
-        position: ephem.observed.moon.apparentLongitudeDms30,
-        aspects: [] = []
-      },
       mercury: {
         position: ephem.observed.mercury.apparentLongitudeDms30,
         aspects: [] = []
@@ -112,6 +108,10 @@ export class AppComponent implements AfterViewInit, OnInit {
       },
       mars: {
         position: ephem.observed.mars.apparentLongitudeDms30,
+        aspects: [] = []
+      },
+      moon: {
+        position: ephem.observed.moon.apparentLongitudeDms30,
         aspects: [] = []
       },
       jupiter: {
@@ -146,16 +146,6 @@ export class AppComponent implements AfterViewInit, OnInit {
         });
       }
     });
-    // moon
-    drawn.aspects.forEach(element => {
-      if (element.planetA.nom === 'moon') {
-        this.aspects.moon.aspects.push({
-          planet: element.planetB.nom,
-          type: element.aspect,
-          degree: element.radius
-        });
-      }
-    });
     // mercury
     drawn.aspects.forEach(element => {
       if (element.planetA.nom === 'mercury') {
@@ -170,6 +160,26 @@ export class AppComponent implements AfterViewInit, OnInit {
     drawn.aspects.forEach(element => {
       if (element.planetA.nom === 'venus') {
         this.aspects.venus.aspects.push({
+          planet: element.planetB.nom,
+          type: element.aspect,
+          degree: element.radius
+        });
+      }
+    });
+    // mars
+    drawn.aspects.forEach(element => {
+      if (element.planetA.nom === 'mars') {
+        this.aspects.mars.aspects.push({
+          planet: element.planetB.nom,
+          type: element.aspect,
+          degree: element.radius
+        });
+      }
+    });
+    // moon
+    drawn.aspects.forEach(element => {
+      if (element.planetA.nom === 'moon') {
+        this.aspects.moon.aspects.push({
           planet: element.planetB.nom,
           type: element.aspect,
           degree: element.radius
@@ -304,6 +314,12 @@ export class AppComponent implements AfterViewInit, OnInit {
         return {
           position: this.aspects.venus.position,
           aspects: this.aspects.venus.aspects.slice(0)
+        };
+        break;
+      case 'mars':
+        return {
+          position: this.aspects.mars.position,
+          aspects: this.aspects.mars.aspects.slice(0)
         };
         break;
       case 'jupiter':

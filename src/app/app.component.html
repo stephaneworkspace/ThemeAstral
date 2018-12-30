@@ -15,13 +15,6 @@
                     </li>
                 </ul>
                 <ul *ngIf="swForm != true">
-                    Moon {{ getAspect('moon').position }}
-                    <li *ngFor="let item of getAspect('moon').aspects; let i = index">
-                        <div *ngIf="item.type === ''">{{ item.planet }} - {{ item.degree}} °</div>
-                        <div *ngIf="item.type !== ''">{{ item.planet }} - {{ item.type }} - {{ item.degree}} °</div>
-                    </li>
-                </ul>
-                <ul *ngIf="swForm != true">
                     Mercury {{ getAspect('mercury').position }}
                     <li *ngFor="let item of getAspect('mercury').aspects; let i = index">
                         <div *ngIf="item.type === ''">{{ item.planet }} - {{ item.degree}} °</div>
@@ -35,6 +28,20 @@
                         <div *ngIf="item.type !== ''">{{ item.planet }} - {{ item.type }} - {{ item.degree}} °</div>
                     </li>
                 </ul> 
+                <ul *ngIf="swForm != true">
+                    Mars {{ getAspect('mars').position }}
+                    <li *ngFor="let item of getAspect('mars').aspects; let i = index">
+                        <div *ngIf="item.type === ''">{{ item.planet }} - {{ item.degree}} °</div>
+                        <div *ngIf="item.type !== ''">{{ item.planet }} - {{ item.type }} - {{ item.degree}} °</div>
+                    </li>
+                </ul> 
+                <ul *ngIf="swForm != true">
+                    Moon {{ getAspect('moon').position }}
+                    <li *ngFor="let item of getAspect('moon').aspects; let i = index">
+                        <div *ngIf="item.type === ''">{{ item.planet }} - {{ item.degree}} °</div>
+                        <div *ngIf="item.type !== ''">{{ item.planet }} - {{ item.type }} - {{ item.degree}} °</div>
+                    </li>
+                </ul>
                 <ul *ngIf="swForm != true">
                     Jupiter {{ getAspect('jupiter').position }}
                     <li *ngFor="let item of getAspect('jupiter').aspects; let i = index">

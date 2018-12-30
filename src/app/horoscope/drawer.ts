@@ -88,6 +88,13 @@ export class Drawer {
                 this.drawAspect(this.planets.venus, this.planets.neptune, 'venus', 'neptune'),
                 this.drawAspect(this.planets.venus, this.planets.pluto, 'venus', 'pluto'),
 
+                this.drawAspect(this.planets.mars, this.planets.moon, 'mars', 'moon'),
+                this.drawAspect(this.planets.mars, this.planets.jupiter, 'mars', 'jupiter'),
+                this.drawAspect(this.planets.mars, this.planets.saturn, 'mars', 'saturn'),
+                this.drawAspect(this.planets.mars, this.planets.uranus, 'mars', 'uranus'),
+                this.drawAspect(this.planets.mars, this.planets.neptune, 'mars', 'neptune'),
+                this.drawAspect(this.planets.mars, this.planets.pluto, 'mars', 'pluto'),
+
                 this.drawAspect(this.planets.moon, this.planets.jupiter, 'moon', 'jupiter'),
                 this.drawAspect(this.planets.moon, this.planets.saturn, 'moon', 'saturn'),
                 this.drawAspect(this.planets.moon, this.planets.uranus, 'moon', 'uranus'),
