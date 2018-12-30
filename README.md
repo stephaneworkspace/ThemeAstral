@@ -34,7 +34,12 @@ electron-packager . --platform=win32
 MacOS
 electron-packager . --platform=darwin
 
+
+(ne fonctionnent pas)
 Installation:
 npm install --global --production windows-build-tools
 npm install --global node-gyp
-npm --python=python2.7 install swisseph
+npm --python=python2.7 install swisseph --global
+
+npm install node-swisseph
+npm --python=python2.7 install node-swisseph --global

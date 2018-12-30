@@ -56,8 +56,6 @@ export class AppComponent implements AfterViewInit, OnInit {
     const ephem = getAllPlanets('03.04.1986 04:54:00', -71.13, 42.27, 0);
     console.log(ephem);
 
-
-
     this.properties = {
       zodiac: {
         ascendant: {
