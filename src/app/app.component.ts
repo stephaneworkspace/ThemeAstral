@@ -42,6 +42,8 @@ export class AppComponent implements AfterViewInit, OnInit {
   private _arrayZodiac: Array<XY210>;*/
   private properties;
 
+  public aspects;
+
   @ViewChild('myCanvas') myCanvas: ElementRef;
   // @ViewChild('zodiacAries') zodiacAries: ElementRef;
 
@@ -91,6 +93,141 @@ export class AppComponent implements AfterViewInit, OnInit {
     const drawn = h.draw('#horoscope');
     console.log('Hurray! You have drawn your horoscope.', drawn);
 
+    this.aspects = {
+      sun: {
+        position: ephem.observed.sun.apparentLongitudeDms30,
+        aspects: []
+      },
+      moon: {
+        position: ephem.observed.moon.apparentLongitudeDms30,
+        aspects: []
+      },
+      mercury: {
+        position: ephem.observed.mercury.apparentLongitudeDms30,
+        aspects: []
+      },
+      venus: {
+        position: ephem.observed.venus.apparentLongitudeDms30,
+        aspects: []
+      },
+      mars: {
+        position: ephem.observed.mars.apparentLongitudeDms30,
+        aspects: []
+      },
+      jupiter: {
+        position: ephem.observed.jupiter.apparentLongitudeDms30,
+        aspects: []
+      },
+      saturn: {
+        position: ephem.observed.saturn.apparentLongitudeDms30,
+        aspects: []
+      },
+      uranus: {
+        position: ephem.observed.uranus.apparentLongitudeDms30,
+        aspects: []
+      },
+      neptune: {
+        position: ephem.observed.neptune.apparentLongitudeDms30,
+        aspects: []
+      },
+      pluto: {
+        position: ephem.observed.pluto.apparentLongitudeDms30,
+        aspects: []
+      },
+    }
+
+    // sun
+    drawn.aspects.forEach(element => {
+      if (element.planetA.nom === 'sun') {
+        this.aspects.sun.aspects.push({
+          planet: element.planetB.nom,
+          type: element.aspect,
+          degree: element.radius
+        });
+      }
+    });
+    // moon
+    drawn.aspects.forEach(element => {
+      if (element.planetA.nom === 'moon') {
+        this.aspects.sun.aspects.push({
+          planet: element.planetB.nom,
+          type: element.aspect,
+          degree: element.radius
+        });
+      }
+    });
+    // mercury
+    drawn.aspects.forEach(element => {
+      if (element.planetA.nom === 'mercury') {
+        this.aspects.sun.aspects.push({
+          planet: element.planetB.nom,
+          type: element.aspect,
+          degree: element.radius
+        });
+      }
+    });
+    // venus
+    drawn.aspects.forEach(element => {
+      if (element.planetA.nom === 'venus') {
+        this.aspects.sun.aspects.push({
+          planet: element.planetB.nom,
+          type: element.aspect,
+          degree: element.radius
+        });
+      }
+    });
+    // jupiter
+    drawn.aspects.forEach(element => {
+      if (element.planetA.nom === 'jupiter') {
+        this.aspects.sun.aspects.push({
+          planet: element.planetB.nom,
+          type: element.aspect,
+          degree: element.radius
+        });
+      }
+    });
+    // saturn
+    drawn.aspects.forEach(element => {
+      if (element.planetA.nom === 'saturn') {
+        this.aspects.sun.aspects.push({
+          planet: element.planetB.nom,
+          type: element.aspect,
+          degree: element.radius
+        });
+      }
+    });
+    // uranus
+    drawn.aspects.forEach(element => {
+      if (element.planetA.nom === 'uranus') {
+        this.aspects.sun.aspects.push({
+          planet: element.planetB.nom,
+          type: element.aspect,
+          degree: element.radius
+        });
+      }
+    });
+    // neptune
+    drawn.aspects.forEach(element => {
+      if (element.planetA.nom === 'neptune') {
+        this.aspects.sun.aspects.push({
+          planet: element.planetB.nom,
+          type: element.aspect,
+          degree: element.radius
+        });
+      }
+    });
+    // pluto
+    drawn.aspects.forEach(element => {
+      if (element.planetA.nom === 'pluto') {
+        this.aspects.sun.aspects.push({
+          planet: element.planetB.nom,
+          type: element.aspect,
+          degree: element.radius
+        });
+      }
+    });
+
+    console.log(this.aspects);
   }
 
   ngOnInit() {
