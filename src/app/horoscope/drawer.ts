@@ -361,9 +361,18 @@ export class Drawer {
 
     drawAscendantDescendantAxis() {
         const ascendantDegree = 0;
-        const ascendantPoint = Calc.getPointOnCircle(zodiac.radius.outer, ascendantDegree, -2);
-        const descendantPoint = Calc.getPointOnCircle(zodiac.radius.outer, Calc.getOppositeDegree(ascendantDegree), -2);
-        const ascendantDescendantAxis = this.snap.line(ascendantPoint.x, ascendantPoint.y, descendantPoint.x, descendantPoint.y);
+        const ascendantPoint = Calc.getPointOnCircle(zodiac.radius.betweenOuterInner, ascendantDegree, -22);
+        const descendantPoint = Calc.getPointOnCircle(zodiac.radius.betweenOuterInner, Calc.getOppositeDegree(ascendantDegree), 4);
+        const ascendantDescendantAxis = this.snap.line(ascendantPoint.x, ascendantPoint.y, descendantPoint.x, descendantPoint.y).attr(
+            {
+                fill: '#FFF',
+                stroke: '#b97a56',
+                strokeWidth: 0.2
+            }
+        );
+
+
+
         ascendantDescendantAxis.addClass('house-axis');
         ascendantDescendantAxis.addClass('house-axis-ascendant-descendant');
         return ascendantDescendantAxis;

@@ -17,6 +17,20 @@ import { Horoscope } from './horoscope/main';
   styleUrls: ['./app.component.scss']
 })
 
+
+/**
+ * A faire:
+ *       zodiac: {
+        ascendant: {
+          sign: 1,      // Sets ascendant by sign. See src/zodiac.js.
+          degree: 0    // Sets degree offset for ascendant sign.
+        },
+        // as
+
+        determiner le signe solaire et tourner la route en fonction du signe
+
+ */
+
 export class AppComponent implements AfterViewInit, OnInit {
   title = 'ThemeAstral';
   saisieForm: FormGroup;
@@ -85,11 +99,11 @@ export class AppComponent implements AfterViewInit, OnInit {
       houses: {
         hasHouses: true,
         axes: {
-          axis2to8: 27,   // Sets degree of axis.
-          axis3to9: 56,
-          axis4to10: 81,
-          axis5to11: 114,
-          axis6to12: 156
+          axis2to8: 30,   // Sets degree of axis.
+          axis3to9: 60,
+          axis4to10: 90,
+          axis5to11: 120,
+          axis6to12: 150
         }
       }
     };
@@ -259,7 +273,7 @@ export class AppComponent implements AfterViewInit, OnInit {
       zodiac: {
         ascendant: {
           sign: 1,      // Sets ascendant by sign. See src/zodiac.js.
-          degree: 1.15    // Sets degree offset for ascendant sign.
+          degree: 0    // Sets degree offset for ascendant sign.
         },
         // ascendant
         ascendantCalc: {
