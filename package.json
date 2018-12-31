@@ -45,7 +45,7 @@
     "bootswatch": "^4.1.3",
     "codelyzer": "~4.5.0",
     "electron": "^4.0.0",
-    "ephemeris_npm": "0.0.13",
+    "ephemeris_npm": "0.0.15",
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",
     "jquery": "^3.3.1",

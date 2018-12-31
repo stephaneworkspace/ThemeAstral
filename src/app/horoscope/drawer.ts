@@ -54,7 +54,8 @@ export class Drawer {
                 ascendant: {
                     signIndex: properties.zodiac.ascendant.sign,
                     correctedByDegrees: properties.zodiac.ascendant.degree,
-              }
+                },
+                ascendantCalc: this.drawAscendant(properties.zodiac.ascendantCalc.sign, properties.zodiac.ascendantCalc.degre),
             },
             houses: {
                 axes: this.drawHousesAxes(),
@@ -143,6 +144,26 @@ export class Drawer {
         ].join(' ');
 
         return d;
+    }
+
+    drawAscendant(sign, degre) {
+        if (sign === null && degre === null) {
+            // continue
+        } else {
+            const radius = zodiac.radius.innerAuxiliary;
+            const point1 = Calc.getPointOnCircle(radius, ((sign - 1) * 30) + degre, 0);
+            const point2 = Calc.getPointOnCircle(radius, ((sign - 1) * 30) + degre, -10);
+
+            const zodiacAsc = this.snap.line(point1.x, point1.y, point2.x, point2.y).attr(
+                {
+                    fill: '#FFF',
+                    stroke: '#000',
+                    strokeWidth: 0.2
+                }
+            );
+        }
+
+        return degre;
     }
 
     drawZodiacCircles() {

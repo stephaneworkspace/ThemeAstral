@@ -33,10 +33,11 @@ export class AppComponent implements AfterViewInit, OnInit {
   private _size = 450;
   private _zodiac = {
     ascendant: {
-      sign: 1,
-      degree: 1.15
+      sign: 1, // 1
+      degree: 0 // 1.15
     }
   };
+
   /*
   private _arrayZodiac12: Array<XY>;
   private _arrayZodiac: Array<XY210>;*/
@@ -53,14 +54,20 @@ export class AppComponent implements AfterViewInit, OnInit {
   onSubmit(): void {
     console.log(this.saisieForm.value);
     this.swForm = false;
-    const ephem = getAllPlanets('03.04.1986 04:54:00', -71.13, 42.27, 0);
+    const ephem = getAllPlanets('03.04.1986 04:54:00', -71.13, 42.27, 0, 11, 8.20);
     console.log(ephem);
 
     this.properties = {
       zodiac: {
+        // signe solaire
         ascendant: {
-          sign: 1,      // Sets ascendant by sign. See src/zodiac.js.
-          degree: 1.15    // Sets degree offset for ascendant sign.
+          sign: 1,
+          degree: 0
+        },
+        // ascendant
+        ascendantCalc: {
+          sign: ephem.observer.ascSigne,
+          degre: ephem.observer.ascDegre
         }
       },
       planets: {        // Sets degree of planets.
@@ -253,6 +260,11 @@ export class AppComponent implements AfterViewInit, OnInit {
         ascendant: {
           sign: 1,      // Sets ascendant by sign. See src/zodiac.js.
           degree: 1.15    // Sets degree offset for ascendant sign.
+        },
+        // ascendant
+        ascendantCalc: {
+          sign: null,
+          degre: null
         }
       },
       planets: {        // Sets degree of planets.
