@@ -58,7 +58,7 @@ export class Drawer {
                 ascendantCalc: this.drawAscendant(properties.zodiac.ascendantCalc.sign, properties.zodiac.ascendantCalc.degre),
             },
             houses: {
-                axes: this.drawHousesAxes(),
+                axes: this.drawHousesAxes(properties.zodiac.ascendantCalc.degre, properties.houses.hasHouses),
                 meta: this.houses
             },
             aspects: [
@@ -335,34 +335,36 @@ export class Drawer {
         return signs;
     }
 
-    drawHousesAxes() {
+    drawHousesAxes(degre, hasHouses) {
         const axis = [];
+        if (hasHouses) {
 
-        const ascendantDescendantAxis = this.drawAscendantDescendantAxis();
-        axis.push(ascendantDescendantAxis);
+            const ascendantDescendantAxis = this.drawAscendantDescendantAxis(degre);
+            axis.push(ascendantDescendantAxis);
 
-        const house2house8Axis = this.drawHouse2House8Axis();
-        axis.push(house2house8Axis);
+            const house2house8Axis = this.drawHouse2House8Axis(degre);
+            axis.push(house2house8Axis);
 
-        const house3house9Axis = this.drawHouse3House9Axis();
-        axis.push(house3house9Axis);
+            const house3house9Axis = this.drawHouse3House9Axis();
+            axis.push(house3house9Axis);
 
-        const immumMediumCoelliAxis = this.drawImmumMediumCoelliAxis();
-        axis.push(immumMediumCoelliAxis);
+            const immumMediumCoelliAxis = this.drawImmumMediumCoelliAxis();
+            axis.push(immumMediumCoelliAxis);
 
-        const house5house11Axis = this.drawHouse5House11Axis();
-        axis.push(house5house11Axis);
+            const house5house11Axis = this.drawHouse5House11Axis();
+            axis.push(house5house11Axis);
 
-        const house6house12Axis = this.drawHouse6House12Axis();
-        axis.push(house6house12Axis);
+            const house6house12Axis = this.drawHouse6House12Axis();
+            axis.push(house6house12Axis);
+        }
 
         return axis;
     }
 
-    drawAscendantDescendantAxis() {
+    drawAscendantDescendantAxis(degre) {
         const ascendantDegree = 0;
-        const ascendantPoint = Calc.getPointOnCircle(zodiac.radius.betweenOuterInner, ascendantDegree, -22);
-        const descendantPoint = Calc.getPointOnCircle(zodiac.radius.betweenOuterInner, Calc.getOppositeDegree(ascendantDegree), 4);
+        const ascendantPoint = Calc.getPointOnCircle(zodiac.radius.betweenOuterInner, ascendantDegree + degre, 0);
+        const descendantPoint = Calc.getPointOnCircle(zodiac.radius.betweenOuterInner, Calc.getOppositeDegree(ascendantDegree + degre), 0);
         const ascendantDescendantAxis = this.snap.line(ascendantPoint.x, ascendantPoint.y, descendantPoint.x, descendantPoint.y).attr(
             {
                 fill: '#FFF',
@@ -370,20 +372,23 @@ export class Drawer {
                 strokeWidth: 0.2
             }
         );
-
-
-
         ascendantDescendantAxis.addClass('house-axis');
         ascendantDescendantAxis.addClass('house-axis-ascendant-descendant');
         return ascendantDescendantAxis;
     }
 
-    drawHouse2House8Axis() {
+    drawHouse2House8Axis(degre) {
         const house2Degree = (this.houses.hasOwnProperty('axes') &&
                             this.houses.axes.hasOwnProperty('axis2to8')) ? this.houses.axes.axis2to8 : null;
-        const house2Point = Calc.getPointOnCircle(zodiac.radius.outer, house2Degree, -2);
-        const house8Point = Calc.getPointOnCircle(zodiac.radius.outer, Calc.getOppositeDegree(house2Degree), -2);
-        const house2house8Axis = this.snap.line(house2Point.x, house2Point.y, house8Point.x, house8Point.y);
+        const house2Point = Calc.getPointOnCircle(zodiac.radius.betweenOuterInner, house2Degree + degre, 0);
+        const house8Point = Calc.getPointOnCircle(zodiac.radius.betweenOuterInner, Calc.getOppositeDegree(house2Degree + degre), 0);
+        const house2house8Axis = this.snap.line(house2Point.x, house2Point.y, house8Point.x, house8Point.y).attr(
+            {
+                fill: '#FFF',
+                stroke: '#b97a56',
+                strokeWidth: 0.2
+            }
+        );
         house2house8Axis.addClass('house-axis');
         house2house8Axis.addClass('house-axis-2-8');
         return house2house8Axis;

@@ -294,13 +294,13 @@ export class AppComponent implements AfterViewInit, OnInit {
         pluto: null
       },
       houses: {
-        hasHouses: true,
+        hasHouses: false,
         axes: {
-          axis2to8: 27,   // Sets degree of axis.
-          axis3to9: 56,
-          axis4to10: 81,
-          axis5to11: 114,
-          axis6to12: 156
+          axis2to8: null,   // Sets degree of axis.
+          axis3to9: null,
+          axis4to10: null,
+          axis5to11: null,
+          axis6to12: null
         }
       }
     };
