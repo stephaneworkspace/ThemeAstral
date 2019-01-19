@@ -8,8 +8,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms'; // <-- here
 import { RoundProgressModule } from 'angular-svg-round-progressbar';
 import { CircleCanvasComponent } from './bidouille/circle-canvas/circle-canvas.component'; //
 
-
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -20,7 +18,7 @@ import { CircleCanvasComponent } from './bidouille/circle-canvas/circle-canvas.c
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    RoundProgressModule
+    RoundProgressModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -8,6 +8,8 @@ import 'rxjs/add/operator/do';
 import { fromEvent, Subscription, from } from 'rxjs';
 import { pairwise, switchMap, takeUntil } from 'rxjs/operators';
 import { getAllPlanets } from 'ephemeris_npm';
+// import { Ascendant } from 'ascendantastrologyspecial'; ne fonctionne pas
+import { Ascendant } from './horoscope/ascendant';
 
 import { Horoscope } from './horoscope/main';
 
@@ -68,8 +70,12 @@ export class AppComponent implements AfterViewInit, OnInit {
   onSubmit(): void {
     console.log(this.saisieForm.value);
     this.swForm = false;
-    const ephem = getAllPlanets('03.04.1986 04:54:00', -71.13, 42.27, 0, 11, 8.20);
+    const ephem = getAllPlanets('03.04.1986 04:54:00', -71.13, 42.27, 0);
     console.log(ephem);
+
+    let asc = new Ascendant(4, '1986-04-03', '04:54');
+    let ascSigne = +asc.getAscendant().signeTypeAsc;
+    let ascDegre = +asc.getAscendant().degre;
 
     this.properties = {
       zodiac: {
@@ -80,8 +86,10 @@ export class AppComponent implements AfterViewInit, OnInit {
         },
         // ascendant
         ascendantCalc: {
-          sign: ephem.observer.ascSigne,
-          degre: ephem.observer.ascDegre
+          sign: ascSigne,
+          degre: 6
+          //sign: ascSigne,
+          //degree: ascDegre
         }
       },
       planets: {        // Sets degree of planets.
